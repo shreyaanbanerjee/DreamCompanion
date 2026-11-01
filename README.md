@@ -109,6 +109,8 @@ DreamCompanion/
 │   ├── src/
 │   │   ├── components/
 │   │   │   ├── Scoreboard.jsx         # Live scorecard with integrated delivery scrubber
+│   │   │   ├── ShotVisualizer.jsx     # Broadcast ground radar, ball trajectory & wagon wheel
+│   │   │   ├── KeyMomentsBar.jsx      # 30s Highlights Reel and one-click key moments jump
 │   │   │   ├── WinProbabilityBar.jsx  # Live CSK vs GT win percentage & delta meter
 │   │   │   ├── FanECG.jsx             # SVG fan tension and emotional curve
 │   │   │   ├── AskCornerChat.jsx      # Messenger UI with suggestions and Gemini link

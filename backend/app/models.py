@@ -49,6 +49,11 @@ class DeliveryUpdate(BaseModel):
     ai_commentary: str = Field(description="Pre-generated dynamic AI commentary")
     batsmen: List[BatsmanStat] = Field(description="Active batsmen statistics")
     bowler_stats: BowlerStat = Field(description="Current bowler figures")
+    shot_name: Optional[str] = Field(default=None, description="Name of shot played")
+    shot_zone: Optional[str] = Field(default=None, description="Field zone targeted")
+    shot_angle_deg: Optional[int] = Field(default=None, description="Polar angle on wagon wheel (0-360)")
+    shot_distance_m: Optional[int] = Field(default=None, description="Estimated shot distance in meters")
+    ball_speed_kph: Optional[float] = Field(default=None, description="Bowler release speed in km/h")
 
 
 class MatchInfo(BaseModel):

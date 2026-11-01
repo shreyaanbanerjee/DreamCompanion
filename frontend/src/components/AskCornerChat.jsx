@@ -3,9 +3,9 @@ import { askCornerAI } from '../services/api';
 
 const PROMPT_SUGGESTIONS = [
   "Can Jadeja finish this with 10 needed off 2 balls?",
-  "What is Dhoni's strategy right now?",
-  "Why is Mohit Sharma bowling the final over?",
-  "What was the key turning point so far?",
+  "Explain Dhoni's duck on 13.5",
+  "Why did Mohit bowl a length ball on 14.5?",
+  "How did DLS calculate 171?",
 ];
 
 export default function AskCornerChat({ currentDelivery, externalPrompt }) {

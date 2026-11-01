@@ -37,12 +37,17 @@ export const INITIAL_DELIVERY = {
   win_prob_delta: 0,
   is_milestone: false,
   milestone_type: 'START',
-  ai_commentary: "Welcome to the Corner! 38 needed off 12 balls. Mohit Sharma with the ball, Rayudu and Dube in the middle. Click 'Start Match' to begin the live simulation!",
+  ai_commentary: "Welcome to the Corner! 38 needed off 12 balls. Mohit Sharma with the ball, Rayudu and Dube in the middle. Click 'Start Match' or run the '30s Highlights' tour!",
   batsmen: [
     { name: 'Ambati Rayudu', runs: 7, balls: 5, fours: 0, sixes: 0, on_strike: true },
     { name: 'Shivam Dube', runs: 28, balls: 18, fours: 0, sixes: 2, on_strike: false }
   ],
-  bowler_stats: { name: 'Mohit Sharma', overs: '1.0', maidens: 0, runs: 10, wickets: 1 }
+  bowler_stats: { name: 'Mohit Sharma', overs: '1.0', maidens: 0, runs: 10, wickets: 1 },
+  shot_name: 'Start of Over 14',
+  shot_zone: 'Pitch',
+  shot_angle_deg: 0,
+  shot_distance_m: 0,
+  ball_speed_kph: 135.0
 };
 
 export const ALL_DELIVERIES = [
@@ -96,7 +101,12 @@ export const ALL_DELIVERIES = [
       "maidens": 0,
       "runs": 16,
       "wickets": 1
-    }
+    },
+    "shot_name": "Lofted Straight Drive",
+    "shot_zone": "Long-Off",
+    "shot_angle_deg": 350,
+    "shot_distance_m": 98,
+    "ball_speed_kph": 134.5
   },
   {
     "ball_index": 2,
@@ -148,7 +158,12 @@ export const ALL_DELIVERIES = [
       "maidens": 0,
       "runs": 20,
       "wickets": 1
-    }
+    },
+    "shot_name": "Inside-Out Cover Drive",
+    "shot_zone": "Deep Extra Cover",
+    "shot_angle_deg": 315,
+    "shot_distance_m": 76,
+    "ball_speed_kph": 136.2
   },
   {
     "ball_index": 3,
@@ -200,7 +215,12 @@ export const ALL_DELIVERIES = [
       "maidens": 0,
       "runs": 26,
       "wickets": 1
-    }
+    },
+    "shot_name": "Slog Sweep / Pull",
+    "shot_zone": "Deep Mid-Wicket",
+    "shot_angle_deg": 65,
+    "shot_distance_m": 92,
+    "ball_speed_kph": 131.0
   },
   {
     "ball_index": 4,
@@ -252,7 +272,12 @@ export const ALL_DELIVERIES = [
       "maidens": 0,
       "runs": 26,
       "wickets": 2
-    }
+    },
+    "shot_name": "Slower Chip (Caught & Bowled)",
+    "shot_zone": "Pitch / Return Catch",
+    "shot_angle_deg": 0,
+    "shot_distance_m": 8,
+    "ball_speed_kph": 119.5
   },
   {
     "ball_index": 5,
@@ -304,7 +329,12 @@ export const ALL_DELIVERIES = [
       "maidens": 0,
       "runs": 26,
       "wickets": 3
-    }
+    },
+    "shot_name": "Hard Push (Caught Cover Point)",
+    "shot_zone": "Cover Point",
+    "shot_angle_deg": 295,
+    "shot_distance_m": 24,
+    "ball_speed_kph": 135.0
   },
   {
     "ball_index": 6,
@@ -356,7 +386,12 @@ export const ALL_DELIVERIES = [
       "maidens": 0,
       "runs": 27,
       "wickets": 3
-    }
+    },
+    "shot_name": "Wristy Nudge to Mid-On",
+    "shot_zone": "Mid-On",
+    "shot_angle_deg": 30,
+    "shot_distance_m": 38,
+    "ball_speed_kph": 137.4
   },
   {
     "ball_index": 7,
@@ -408,7 +443,12 @@ export const ALL_DELIVERIES = [
       "maidens": 0,
       "runs": 27,
       "wickets": 3
-    }
+    },
+    "shot_name": "Defensive Block to Yorker",
+    "shot_zone": "Straight / Bowler",
+    "shot_angle_deg": 5,
+    "shot_distance_m": 6,
+    "ball_speed_kph": 139.8
   },
   {
     "ball_index": 8,
@@ -460,7 +500,12 @@ export const ALL_DELIVERIES = [
       "maidens": 0,
       "runs": 28,
       "wickets": 3
-    }
+    },
+    "shot_name": "Toe-Crusher Dug Out to Long-On",
+    "shot_zone": "Long-On",
+    "shot_angle_deg": 25,
+    "shot_distance_m": 64,
+    "ball_speed_kph": 141.2
   },
   {
     "ball_index": 9,
@@ -512,7 +557,12 @@ export const ALL_DELIVERIES = [
       "maidens": 0,
       "runs": 29,
       "wickets": 3
-    }
+    },
+    "shot_name": "Angled Glance to Square Leg",
+    "shot_zone": "Deep Square Leg",
+    "shot_angle_deg": 85,
+    "shot_distance_m": 72,
+    "ball_speed_kph": 138.5
   },
   {
     "ball_index": 10,
@@ -564,7 +614,12 @@ export const ALL_DELIVERIES = [
       "maidens": 0,
       "runs": 30,
       "wickets": 3
-    }
+    },
+    "shot_name": "Full Toss Driven to Long-Off",
+    "shot_zone": "Long-Off",
+    "shot_angle_deg": 340,
+    "shot_distance_m": 68,
+    "ball_speed_kph": 137.0
   },
   {
     "ball_index": 11,
@@ -616,7 +671,12 @@ export const ALL_DELIVERIES = [
       "maidens": 0,
       "runs": 36,
       "wickets": 3
-    }
+    },
+    "shot_name": "Straight Loft over Sightscreen",
+    "shot_zone": "Straight Long-On",
+    "shot_angle_deg": 0,
+    "shot_distance_m": 101,
+    "ball_speed_kph": 134.8
   },
   {
     "ball_index": 12,
@@ -668,6 +728,11 @@ export const ALL_DELIVERIES = [
       "maidens": 0,
       "runs": 40,
       "wickets": 3
-    }
+    },
+    "shot_name": "Pad-Flick Past Short Fine Leg",
+    "shot_zone": "Fine Leg (Match Winner)",
+    "shot_angle_deg": 135,
+    "shot_distance_m": 78,
+    "ball_speed_kph": 132.4
   }
 ];

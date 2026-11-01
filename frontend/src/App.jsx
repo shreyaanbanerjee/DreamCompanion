@@ -6,9 +6,10 @@ import FanECG from './components/FanECG';
 import AskCornerChat from './components/AskCornerChat';
 import MatchControls from './components/MatchControls';
 import WhatIfScenarios from './components/WhatIfScenarios';
+import KeyMomentsBar from './components/KeyMomentsBar';
 import { SimulatorSocketManager } from './services/websocket';
 import { INITIAL_MATCH_INFO, INITIAL_DELIVERY, ALL_DELIVERIES } from './constants/fallbackData';
-import { playBatCrack, playWicketSound, playChampionshipChime } from './utils/audioFx';
+import { playBatCrack, playWicketSound, playChampionshipChime, setAudioEnabled } from './utils/audioFx';
 
 export default function App() {
   const [matchInfo, setMatchInfo] = useState(INITIAL_MATCH_INFO);
@@ -17,8 +18,9 @@ export default function App() {
   const [connectionStatus, setConnectionStatus] = useState('connecting');
   const [simulatorStatus, setSimulatorStatus] = useState('idle');
   const [currentInterval, setCurrentInterval] = useState(5.0);
-  const [isGuideOpen, setIsGuideOpen] = useState(true);
+  const [isGuideOpen, setIsGuideOpen] = useState(false);
   const [scenarioPrompt, setScenarioPrompt] = useState(null);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(false);
 
   // Client-side fallback simulation index
   const clientIndexRef = useRef(0);
@@ -77,12 +79,15 @@ export default function App() {
         }
       } else if (msg.type === 'match_completed') {
         setSimulatorStatus('completed');
+        setIsAutoPlaying(false);
       } else if (msg.type === 'control_start') {
         setSimulatorStatus('running');
       } else if (msg.type === 'control_pause') {
         setSimulatorStatus('paused');
+        setIsAutoPlaying(false);
       } else if (msg.type === 'control_reset') {
         setSimulatorStatus('idle');
+        setIsAutoPlaying(false);
         setCurrentDelivery(INITIAL_DELIVERY);
         setBallHistory([INITIAL_DELIVERY]);
       } else if (msg.type === 'control_set_interval') {
@@ -106,6 +111,7 @@ export default function App() {
       applyDelivery(ALL_DELIVERIES[nextIdx]);
     } else {
       setSimulatorStatus('completed');
+      setIsAutoPlaying(false);
       if (clientTimerRef.current) {
         clearInterval(clientTimerRef.current);
         clientTimerRef.current = null;
@@ -118,11 +124,9 @@ export default function App() {
     if (connectionStatus === 'connected') {
       socketManagerRef.current?.start();
     } else {
-      // Standalone Cloud Simulator Engine
       setSimulatorStatus('running');
       if (clientTimerRef.current) clearInterval(clientTimerRef.current);
 
-      // If at start, push first ball immediately
       if (clientIndexRef.current === 0 && currentDelivery.ball_index === 0) {
         advanceClientStep();
       }
@@ -134,6 +138,7 @@ export default function App() {
   };
 
   const handlePause = () => {
+    setIsAutoPlaying(false);
     if (connectionStatus === 'connected') {
       socketManagerRef.current?.pause();
     } else {
@@ -146,6 +151,7 @@ export default function App() {
   };
 
   const handleReset = () => {
+    setIsAutoPlaying(false);
     if (connectionStatus === 'connected') {
       socketManagerRef.current?.reset();
     } else {
@@ -173,13 +179,52 @@ export default function App() {
     if (connectionStatus === 'connected') {
       socketManagerRef.current?.setInterval(interval);
     } else {
-      if (simulatorStatus === 'running') {
+      if (simulatorStatus === 'running' || isAutoPlaying) {
         if (clientTimerRef.current) clearInterval(clientTimerRef.current);
         clientTimerRef.current = setInterval(() => {
           advanceClientStep();
         }, interval * 1000);
       }
     }
+  };
+
+  // Quick jump to key moment
+  const handleJumpToMoment = (ballIndex) => {
+    if (ballIndex < 1 || ballIndex > ALL_DELIVERIES.length) return;
+    clientIndexRef.current = ballIndex - 1;
+    const targetDelivery = ALL_DELIVERIES[ballIndex - 1];
+    const newHistory = [INITIAL_DELIVERY, ...ALL_DELIVERIES.slice(0, ballIndex)];
+    setCurrentDelivery(targetDelivery);
+    setBallHistory(newHistory);
+    triggerAudioForDelivery(targetDelivery);
+  };
+
+  // Auto-play 30s Highlights Reel
+  const handleAutoPlayHighlights = () => {
+    if (isAutoPlaying) {
+      handlePause();
+      return;
+    }
+
+    // Enable audio automatically for demo
+    setAudioEnabled(true);
+    setIsAutoPlaying(true);
+    setSimulatorStatus('running');
+
+    // If at the end, restart from beginning
+    if (clientIndexRef.current >= ALL_DELIVERIES.length - 1) {
+      clientIndexRef.current = 0;
+      setCurrentDelivery(ALL_DELIVERIES[0]);
+      setBallHistory([INITIAL_DELIVERY, ALL_DELIVERIES[0]]);
+      triggerAudioForDelivery(ALL_DELIVERIES[0]);
+    }
+
+    if (clientTimerRef.current) clearInterval(clientTimerRef.current);
+
+    // Fast-forward 1.2s per ball
+    clientTimerRef.current = setInterval(() => {
+      advanceClientStep();
+    }, 1200);
   };
 
   const handleScenarioSelect = (prompt) => {
@@ -200,12 +245,50 @@ export default function App() {
       />
 
       {/* Main Responsive Canvas */}
-      <main className="flex-1 max-w-7xl w-full mx-auto p-3 sm:p-6 lg:p-8 space-y-5">
+      <main className="flex-1 max-w-7xl w-full mx-auto p-3 sm:p-6 lg:p-8 space-y-4 sm:space-y-5">
+        {/* Recruiter Quick-Start Banner */}
+        <div className="bg-slate-900/90 border border-amber-400/30 rounded-xl p-3 sm:px-4 sm:py-3 flex flex-wrap items-center justify-between gap-3 text-xs">
+          <div className="flex items-center gap-2">
+            <span className="bg-amber-400 text-slate-950 font-bold px-2 py-0.5 rounded text-[10px] font-mono">
+              Evaluator Quick-Start
+            </span>
+            <span className="text-slate-200 font-medium text-xs">
+              Experience the 2023 IPL Final Climax (CSK vs GT):
+            </span>
+          </div>
+          <div className="flex flex-wrap items-center gap-2 text-slate-400 text-[11px] font-mono">
+            <button
+              onClick={handleAutoPlayHighlights}
+              className="bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 border border-amber-400/40 px-2.5 py-1 rounded font-bold transition-colors"
+            >
+              1. {isAutoPlaying ? '⏹ Pause Reel' : '▶ 30s Highlights'}
+            </button>
+            <span className="text-slate-600 hidden sm:inline">➔</span>
+            <span className="bg-slate-800/80 px-2 py-1 rounded text-slate-300">
+              2. Inspect Shot Radar & Win Delta
+            </span>
+            <span className="text-slate-600 hidden sm:inline">➔</span>
+            <span className="bg-slate-800/80 px-2 py-1 rounded text-slate-300">
+              3. Ask Corner AI
+            </span>
+          </div>
+        </div>
+
         {/* Evaluator Instructions & Product Guide */}
         <GuideBanner
           isOpen={isGuideOpen}
           onClose={() => setIsGuideOpen(false)}
         />
+
+        {/* Quick Highlights & Key Moments Bar */}
+        <section aria-label="Key Match Moments">
+          <KeyMomentsBar
+            currentBallIndex={currentDelivery.ball_index}
+            onJumpToMoment={handleJumpToMoment}
+            onAutoPlayHighlights={handleAutoPlayHighlights}
+            isAutoPlaying={isAutoPlaying}
+          />
+        </section>
 
         {/* Simulator Control Toolbar */}
         <section aria-label="Simulator Controls">
@@ -221,7 +304,7 @@ export default function App() {
           />
         </section>
 
-        {/* TOP HALF: Live Cricket Scoreboard */}
+        {/* TOP HALF: Live Cricket Scoreboard with Shot Radar & Scrubber */}
         <section aria-label="Match Scoreboard">
           <Scoreboard
             delivery={currentDelivery}
@@ -232,7 +315,7 @@ export default function App() {
         </section>
 
         {/* BOTTOM HALF: Split Screen - Ask Corner AI Chat & Real-Time Fan ECG */}
-        <section aria-label="Interactive Corner & ECG" className="grid grid-cols-1 lg:grid-cols-2 gap-5 items-stretch">
+        <section aria-label="Interactive Corner & ECG" className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5 items-stretch">
           {/* Bottom Left: Live "Ask Corner" Chat */}
           <div className="h-full">
             <AskCornerChat

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import WinProbabilityBar from './WinProbabilityBar';
+import ShotVisualizer from './ShotVisualizer';
 import { playTick } from '../utils/audioFx';
 
 export default function Scoreboard({
@@ -165,58 +166,66 @@ export default function Scoreboard({
         </div>
       )}
 
-      {/* Batting & Bowling Tables */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono mb-4">
-        {/* Batters */}
-        <div className="bg-slate-900/80 rounded-lg p-3 border border-slate-800">
-          <div className="text-[11px] font-semibold text-slate-400 mb-2 font-sans flex items-center justify-between border-b border-slate-800 pb-1">
-            <span>Batting</span>
-            <span>R (B) • 4s • 6s • SR</span>
-          </div>
-          <div className="space-y-1">
-            {displayDelivery.batsmen && displayDelivery.batsmen.map((bat, idx) => (
-              <div
-                key={idx}
-                className={`flex items-center justify-between py-1 px-1.5 rounded ${
-                  bat.on_strike ? 'bg-amber-400/10 text-white font-medium' : 'text-slate-300'
-                }`}
-              >
-                <div className="font-sans">
-                  {bat.name} {bat.on_strike && <span className="text-amber-400">*</span>}
+      {/* Batting, Bowling & Field Radar Split */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 text-xs font-mono mb-4">
+        {/* Batters & Bowler: 7 cols */}
+        <div className="lg:col-span-7 space-y-3">
+          {/* Batters */}
+          <div className="bg-slate-900/80 rounded-lg p-3 border border-slate-800">
+            <div className="text-[11px] font-semibold text-slate-400 mb-2 font-sans flex items-center justify-between border-b border-slate-800 pb-1">
+              <span>Batting</span>
+              <span>R (B) • 4s • 6s • SR</span>
+            </div>
+            <div className="space-y-1">
+              {displayDelivery.batsmen && displayDelivery.batsmen.map((bat, idx) => (
+                <div
+                  key={idx}
+                  className={`flex items-center justify-between py-1 px-1.5 rounded ${
+                    bat.on_strike ? 'bg-amber-400/10 text-white font-medium' : 'text-slate-300'
+                  }`}
+                >
+                  <div className="font-sans">
+                    {bat.name} {bat.on_strike && <span className="text-amber-400">*</span>}
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="font-bold text-white">{bat.runs} <span className="text-slate-400 font-normal">({bat.balls})</span></span>
+                    <span className="text-slate-400">{bat.fours}</span>
+                    <span className="text-amber-300">{bat.sixes}</span>
+                    <span className="text-slate-400 text-right min-w-[36px]">{strikeRate(bat.runs, bat.balls)}</span>
+                  </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <span className="font-bold text-white">{bat.runs} <span className="text-slate-400 font-normal">({bat.balls})</span></span>
-                  <span className="text-slate-400">{bat.fours}</span>
-                  <span className="text-amber-300">{bat.sixes}</span>
-                  <span className="text-slate-400 text-right min-w-[36px]">{strikeRate(bat.runs, bat.balls)}</span>
+              ))}
+            </div>
+          </div>
+
+          {/* Bowler */}
+          <div className="bg-slate-900/80 rounded-lg p-3 border border-slate-800">
+            <div className="text-[11px] font-semibold text-slate-400 mb-2 font-sans flex items-center justify-between border-b border-slate-800 pb-1">
+              <span>Bowling</span>
+              <span>O • M • R • W • ECO</span>
+            </div>
+            {displayDelivery.bowler_stats ? (
+              <div className="flex items-center justify-between py-1 px-1.5 text-white">
+                <div className="font-medium font-sans">{displayDelivery.bowler_stats.name}</div>
+                <div className="flex items-center gap-3 text-slate-300">
+                  <span>{displayDelivery.bowler_stats.overs}</span>
+                  <span className="text-slate-500">{displayDelivery.bowler_stats.maidens}</span>
+                  <span className="text-slate-200">{displayDelivery.bowler_stats.runs}</span>
+                  <span className="font-bold text-amber-300">{displayDelivery.bowler_stats.wickets}</span>
+                  <span className="text-slate-400 text-right min-w-[36px]">
+                    {(displayDelivery.bowler_stats.runs / (parseFloat(displayDelivery.bowler_stats.overs) || 1)).toFixed(1)}
+                  </span>
                 </div>
               </div>
-            ))}
+            ) : (
+              <div className="text-slate-500 py-1">No bowler active</div>
+            )}
           </div>
         </div>
 
-        {/* Bowler */}
-        <div className="bg-slate-900/80 rounded-lg p-3 border border-slate-800">
-          <div className="text-[11px] font-semibold text-slate-400 mb-2 font-sans flex items-center justify-between border-b border-slate-800 pb-1">
-            <span>Bowling</span>
-            <span>O • M • R • W • ECO</span>
-          </div>
-          {displayDelivery.bowler_stats ? (
-            <div className="flex items-center justify-between py-1 px-1.5 text-white">
-              <div className="font-medium font-sans">{displayDelivery.bowler_stats.name}</div>
-              <div className="flex items-center gap-3 text-slate-300">
-                <span>{displayDelivery.bowler_stats.overs}</span>
-                <span className="text-slate-500">{displayDelivery.bowler_stats.maidens}</span>
-                <span className="text-slate-200">{displayDelivery.bowler_stats.runs}</span>
-                <span className="font-bold text-amber-300">{displayDelivery.bowler_stats.wickets}</span>
-                <span className="text-slate-400 text-right min-w-[36px]">
-                  {(displayDelivery.bowler_stats.runs / (parseFloat(displayDelivery.bowler_stats.overs) || 1)).toFixed(1)}
-                </span>
-              </div>
-            </div>
-          ) : (
-            <div className="text-slate-500 py-1">No bowler active</div>
-          )}
+        {/* Shot Radar & Wagon Wheel: 5 cols */}
+        <div className="lg:col-span-5 flex flex-col justify-stretch">
+          <ShotVisualizer delivery={displayDelivery} />
         </div>
       </div>
 
