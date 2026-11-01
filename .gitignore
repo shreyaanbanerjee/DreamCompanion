@@ -1,4 +1,11 @@
-# Byte-compiled / optimized / DLL files
+# Node / CDK / Build outputs
+node_modules/
+cdk.out/
+cdk-outputs.json
+dist/
+.venv/
+.pytest_cache/
+
 __pycache__/
 *.py[codz]
 *$py.class

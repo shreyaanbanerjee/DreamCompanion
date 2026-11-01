@@ -1,0 +1,16 @@
+# Default configuration for subagent-personas
+enabled: true
+default_reviewer_lens: "senior-staff"
+security:
+  owasp_top_10_check: true
+  secret_scan: true
+  strict_sql_injection: true
+  dependency_vulnerability_audit: true
+test_engineer:
+  target_branch_coverage: 85
+  require_boundary_value_analysis: true
+  require_mock_isolation: true
+code_reviewer:
+  max_cognitive_complexity_per_func: 10
+  forbid_silent_exception_swallowing: true
+  require_typed_signatures: true

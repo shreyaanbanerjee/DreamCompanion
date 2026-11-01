@@ -1,0 +1,25 @@
+{
+  "name": "dreamcompanion-infra",
+  "version": "1.0.0",
+  "bin": {
+    "dream-companion": "bin/dream-companion.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "cdk": "cdk",
+    "synth": "cdk synth",
+    "deploy": "cdk deploy --require-approval never"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "aws-cdk": "^2.140.0",
+    "ts-node": "^10.9.2",
+    "typescript": "~5.4.5"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "^2.140.0",
+    "constructs": "^10.3.0",
+    "dotenv": "^18.0.9"
+  }
+}

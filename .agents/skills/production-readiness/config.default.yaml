@@ -1,0 +1,11 @@
+# Default configuration for production-readiness
+enabled: true
+block_merge_on_uncommitted_env: true
+block_console_logs: true
+enforce_error_boundaries: true
+check_bundle_size_impact: true
+secret_detection_patterns:
+  - "(?i)api[_-]?key\\s*[:=]\\s*['\"][a-zA-Z0-9_\\-]{16,}['\"]"
+  - "(?i)secret[_-]?key\\s*[:=]\\s*['\"][a-zA-Z0-9_\\-]{16,}['\"]"
+  - "(?i)bearer\\s+[a-zA-Z0-9_\\-\\.]+"
+  - "(?i)ghp_[a-zA-Z0-9]{36}"

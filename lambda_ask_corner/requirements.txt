@@ -1,0 +1,3 @@
+# Lambda utilizes Python 3.11 built-in standard library (urllib, json, os)
+# for zero-dependency ultra-fast cold starts and minimal deployment package size.
+

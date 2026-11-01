@@ -1,0 +1,22 @@
+# Default configuration for humanizer-writing
+enabled: true
+tone: "concise-engineering"
+ban_ai_cliches: true
+avoid_excessive_bullet_points: true
+direct_answering: true
+forbid_sycophancy: true
+banned_words:
+  - delve
+  - testament
+  - tapestry
+  - beacon
+  - orchestrating
+  - pivotal
+  - plethora
+  - furthermore
+  - it's worth noting
+  - in conclusion
+  - embark
+  - paramount
+  - meticulous
+  - multifaceted

@@ -1,0 +1,98 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  DreamCompanion: Corner Edition - AWS SAM Template
+  Serverless Architecture for Ask Corner Chat and Simulator
+
+Globals:
+  Function:
+    Timeout: 30
+    MemorySize: 512
+    Runtime: python3.11
+
+Parameters:
+  GeminiApiKey:
+    Type: String
+    Default: ""
+    Description: Optional Google Gemini API Key
+    NoEcho: true
+  AnthropicApiKey:
+    Type: String
+    Default: ""
+    Description: Optional Anthropic Claude API Key
+    NoEcho: true
+
+Resources:
+  # ============================================================================
+  # 1. Ask Corner HTTP API Gateway
+  # ============================================================================
+  AskCornerHttpApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      CorsConfiguration:
+        AllowOrigins:
+          - "*"
+        AllowMethods:
+          - POST
+          - OPTIONS
+          - GET
+        AllowHeaders:
+          - "*"
+        MaxAge: 86400
+
+  # ============================================================================
+  # 2. Ask Corner Lambda Function
+  # ============================================================================
+  AskCornerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../lambda_ask_corner/
+      Handler: handler.lambda_handler
+      Description: "Live Ask Corner AI Chat with CSK Fan Lore Pack"
+      Environment:
+        Variables:
+          FAN_LORE_TEAM: "Chennai Super Kings"
+          GEMINI_API_KEY: !Ref GeminiApiKey
+          ANTHROPIC_API_KEY: !Ref AnthropicApiKey
+      Events:
+        AskEndpoint:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref AskCornerHttpApi
+            Path: /ask
+            Method: POST
+
+  # ============================================================================
+  # 3. AWS Amplify Frontend App
+  # ============================================================================
+  AmplifyApp:
+    Type: AWS::Amplify::App
+    Properties:
+      Name: dreamcompanion-corner-frontend
+      Platform: WEB
+      Description: DreamCompanion Corner Edition React Frontend
+      EnvironmentVariables:
+        - Name: VITE_API_URL
+          Value: !Sub "https://${AskCornerHttpApi}.execute-api.${AWS::Region}.amazonaws.com/"
+      CustomRules:
+        - Source: </^[^.]+$|\.(?!(css|gif|ico|jpg|js|png|txt|svg|woff|woff2|ttf|map|json)$)([^.]+$)/>
+          Target: /index.html
+          Status: "200"
+
+  AmplifyBranch:
+    Type: AWS::Amplify::Branch
+    Properties:
+      AppId: !GetAtt AmplifyApp.AppId
+      BranchName: main
+      EnableAutoBuild: true
+      Stage: PRODUCTION
+
+Outputs:
+  AskCornerApiUrl:
+    Description: "API Gateway endpoint for Ask Corner chat"
+    Value: !Sub "https://${AskCornerHttpApi}.execute-api.${AWS::Region}.amazonaws.com/ask"
+
+  AmplifyAppUrl:
+    Description: "Amplify App Production Domain"
+    Value: !Sub "https://main.${AmplifyApp.DefaultDomain}"
+

@@ -1,0 +1,128 @@
+# ==============================================================================
+# Google Antigravity Agent Skills: Per-Project Configuration
+# Location: .agents/skills.config.yaml
+#
+# Override any default parameters from individual skills' config.default.yaml.
+# When a skill runs, it inherits from its internal config.default.yaml and
+# merges these project-level overrides on top.
+# ==============================================================================
+
+version: 1.0
+project_name: "DreamCompanion"
+
+skills:
+  # ----------------------------------------------------------------------------
+  # 1. Constraint-Driven Development (Superpowers / TDD / Strict Execution)
+  # ----------------------------------------------------------------------------
+  constraint-driven-dev:
+    enabled: true
+    strict_tdd: true                    # Mandate writing/specifying test before implementation
+    require_plan_signoff: true          # Present step-by-step architectural plan before editing
+    max_diff_lines_per_step: 150        # Keep code edits small, atomic, and testable
+    auto_rollback_on_test_failure: true # Revert broken step if verification tests fail
+    verification_command: "auto"        # Auto-detect pytest, npm test, cargo test, etc.
+
+  # ----------------------------------------------------------------------------
+  # 2. Subagent Personas (Security Auditor, Test Engineer, Code Reviewer)
+  # ----------------------------------------------------------------------------
+  subagent-personas:
+    enabled: true
+    default_reviewer_lens: "senior-staff"  # Options: senior-staff, security-first, performance
+    security:
+      owasp_top_10_check: true
+      secret_scan: true
+      strict_sql_injection: true
+      dependency_vulnerability_audit: true
+    test_engineer:
+      target_branch_coverage: 85
+      require_boundary_value_analysis: true
+      require_mock_isolation: true
+    code_reviewer:
+      max_cognitive_complexity_per_func: 10
+      forbid_silent_exception_swallowing: true
+      require_typed_signatures: true
+
+  # ----------------------------------------------------------------------------
+  # 3. Git Commit Formatter (Conventional Commits & Semantic Diffs)
+  # ----------------------------------------------------------------------------
+  git-commit-formatter:
+    enabled: true
+    format: "conventional"              # conventional | gitmoji | custom
+    max_header_length: 72               # Hard limit on commit subject line
+    max_body_line_length: 80            # Wrap body lines
+    ticket_prefix: "DC-"                # e.g., DC-102 (Leave empty if no ticketing)
+    require_ticket_id: false            # Mandate ticket ID in commit subject/footer
+    types:
+      - feat
+      - fix
+      - docs
+      - style
+      - refactor
+      - perf
+      - test
+      - build
+      - ci
+      - chore
+      - revert
+    include_co_authored_by: true
+    auto_stage_before_commit: false
+
+  # ----------------------------------------------------------------------------
+  # 4. JSON to Pydantic (Type Model Generation)
+  # ----------------------------------------------------------------------------
+  json-to-pydantic:
+    enabled: true
+    pydantic_version: 2                 # Generate Pydantic V2 models (BaseModel, Field)
+    use_field_descriptions: true       # Generate Field(description=...) from keys
+    datetime_detection: true            # Infer datetime.datetime from ISO strings
+    uuid_detection: true                # Infer uuid.UUID
+    use_frozen_models: false            # ConfigDict(frozen=True)
+    generate_json_schema_extra: true   # Include example payloads in model_config
+
+  # ----------------------------------------------------------------------------
+  # 5. Emil Kowalski Design Engineering (Frontend Motion & Interaction)
+  # ----------------------------------------------------------------------------
+  emil-kowalski-design:
+    enabled: true
+    motion_library: "framer-motion"      # framer-motion | css-springs | vanilla-web-animations
+    default_spring:
+      stiffness: 400
+      damping: 30
+      mass: 0.8
+    haptics_and_scale:
+      tap_scale: 0.97                   # Subtle tactile press feedback
+      hover_lift_px: -2
+    a11y:
+      respect_reduced_motion: true      # Mandatory prefers-reduced-motion fallback
+      minimum_touch_target_px: 44       # WCAG AAA compliance
+      focus_ring_style: "offset"        # Accessible focus visible indicator
+
+  # ----------------------------------------------------------------------------
+  # 6. Humanizer & Stop Slop (High-Signal Technical Prose)
+  # ----------------------------------------------------------------------------
+  humanizer-writing:
+    enabled: true
+    tone: "concise-engineering"         # concise-engineering | documentation | executive
+    ban_ai_cliches: true                # Purge "delve", "tapestry", "beacon", "testament", etc.
+    avoid_excessive_bullet_points: true # Prefer cohesive paragraphs or code over shallow lists
+    direct_answering: true              # Answer immediately; zero conversational filler
+    forbid_sycophancy: true             # No "Certainly! I'd be happy to help..."
+
+  # ----------------------------------------------------------------------------
+  # 7. Systematic Debugging (5 Whys & Root Cause Isolation)
+  # ----------------------------------------------------------------------------
+  systematic-debugging:
+    enabled: true
+    forbid_speculative_fixes: true      # Never guess; prove hypothesis with log/reproduction first
+    min_five_whys_depth: 3              # Trace cause at least 3 layers deep
+    require_regression_test: true       # Every bug fix must include a reproducing test case
+
+  # ----------------------------------------------------------------------------
+  # 8. Production Readiness (Pre-Flight Release Guard)
+  # ----------------------------------------------------------------------------
+  production-readiness:
+    enabled: true
+    block_merge_on_uncommitted_env: true
+    block_console_logs: true            # Flag console.log in production code paths
+    enforce_error_boundaries: true      # Verify all async boundaries have catches/fallbacks
+    check_bundle_size_impact: true

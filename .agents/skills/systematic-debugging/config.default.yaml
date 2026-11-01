@@ -1,0 +1,6 @@
+# Default configuration for systematic-debugging
+enabled: true
+forbid_speculative_fixes: true
+min_five_whys_depth: 3
+require_regression_test: true
+log_hypothesis_before_edit: true

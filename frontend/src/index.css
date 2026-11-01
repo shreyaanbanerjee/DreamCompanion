@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-primary: #FDB913;
+    --color-bg: #070C18;
+  }
+
+  body {
+    background-color: #070C18;
+    color: #F1F5F9;
+    overflow-x: hidden;
+  }
+}
+
+/* Tactile micro-interactions adhering to Emil Kowalski design specs */
+.tactile-btn {
+  transition: transform 120ms cubic-bezier(0.4, 0, 0.2, 1),
+              background-color 150ms ease,
+              border-color 150ms ease,
+              box-shadow 150ms ease;
+  user-select: none;
+}
+
+.tactile-btn:hover {
+  transform: translateY(-1.5px);
+}
+
+.tactile-btn:active {
+  transform: scale(0.97);
+}
+
+.tactile-btn:focus-visible {
+  outline: none;
+  ring: 2px;
+  ring-color: #FDB913;
+  ring-offset: 2px;
+  ring-offset-color: #070C18;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tactile-btn {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+/* Custom crisp dark scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0B132B;
+}
+::-webkit-scrollbar-thumb {
+  background: #1E2D4A;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #FDB913;
+}
+
+.font-mono-numbers {
+  font-family: 'JetBrains Mono', monospace;
+  font-variant-numeric: tabular-nums;
+}
+

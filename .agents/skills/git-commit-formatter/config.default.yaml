@@ -1,0 +1,21 @@
+# Default configuration for git-commit-formatter
+enabled: true
+format: "conventional"
+max_header_length: 72
+max_body_line_length: 80
+ticket_prefix: ""
+require_ticket_id: false
+types:
+  - feat
+  - fix
+  - docs
+  - style
+  - refactor
+  - perf
+  - test
+  - build
+  - ci
+  - chore
+  - revert
+include_co_authored_by: true
+auto_stage_before_commit: false

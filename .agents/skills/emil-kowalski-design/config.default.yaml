@@ -1,0 +1,17 @@
+# Default configuration for emil-kowalski-design
+enabled: true
+motion_library: "framer-motion"
+default_spring:
+  stiffness: 400
+  damping: 30
+  mass: 0.8
+haptics_and_scale:
+  tap_scale: 0.97
+  hover_lift_px: -2
+a11y:
+  respect_reduced_motion: true
+  minimum_touch_target_px: 44
+  focus_ring_style: "offset"
+performance:
+  use_gpu_transforms: true
+  avoid_layout_thrashing: true

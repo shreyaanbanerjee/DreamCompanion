@@ -1,0 +1,9 @@
+# Default configuration for json-to-pydantic
+enabled: true
+pydantic_version: 2
+use_field_descriptions: true
+datetime_detection: true
+uuid_detection: true
+use_frozen_models: false
+generate_json_schema_extra: true
+default_root_class_name: "RootModel"
