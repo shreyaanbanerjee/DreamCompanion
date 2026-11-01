@@ -47,3 +47,25 @@ def test_control_endpoint():
     assert res.status_code == 200
     assert res.json()["state"]["current_index"] == 0
 
+    # Invalid action
+    res = client.post("/api/simulator/control", json={"action": "invalid_action"})
+    assert res.status_code == 400
+
+
+def test_deliveries_endpoint():
+    response = client.get("/api/deliveries")
+    assert response.status_code == 200
+    deliveries = response.json()
+    assert len(deliveries) == 12
+    for d in deliveries:
+        assert "shot_name" in d
+        assert "win_prob_csk" in d
+
+
+def test_ask_endpoint_local():
+    response = client.post("/ask", json={"question": "What is Dhoni's strategy?"})
+    assert response.status_code == 200
+    data = response.json()
+    assert data["success"] is True
+    assert "response" in data
+

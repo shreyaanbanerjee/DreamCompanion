@@ -68,3 +68,41 @@ def test_empty_question():
     response = lambda_handler(event, None)
     assert response["statusCode"] == 400
 
+
+def test_missing_body():
+    event = {
+        "httpMethod": "POST",
+        "headers": {},
+    }
+    response = lambda_handler(event, None)
+    assert response["statusCode"] == 400
+    body = json.loads(response["body"])
+    assert body["success"] is False
+
+
+def test_greeting_query():
+    event = {
+        "httpMethod": "POST",
+        "body": json.dumps({"question": "vanakkam"})
+    }
+    response = lambda_handler(event, None)
+    assert response["statusCode"] == 200
+    body = json.loads(response["body"])
+    assert body["success"] is True
+    assert "Vanakkam" in body["response"] or "Whistle Podu" in body["response"]
+
+
+def test_what_if_query():
+    event = {
+        "httpMethod": "POST",
+        "body": json.dumps({
+            "question": "Why did Mohit bowl a length ball on 14.5?",
+            "match_context": "CSK need 10 off 2 balls."
+        })
+    }
+    response = lambda_handler(event, None)
+    assert response["statusCode"] == 200
+    body = json.loads(response["body"])
+    assert body["success"] is True
+    assert "response" in body
+

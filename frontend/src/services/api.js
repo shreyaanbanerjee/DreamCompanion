@@ -2,7 +2,14 @@
  * Client service for calling the 'Ask Corner' AI Chat service (AWS API Gateway + Lambda or local simulator).
  */
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://2w9xgvn0hi.execute-api.us-east-1.amazonaws.com/';
+export function getApiBaseUrl() {
+  if (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_API_URL) {
+    return import.meta.env.VITE_API_URL;
+  }
+  return 'https://2w9xgvn0hi.execute-api.us-east-1.amazonaws.com/';
+}
+
+const API_BASE_URL = getApiBaseUrl();
 
 export async function askCornerAI(question, matchContext = '') {
   let endpoint = '';
