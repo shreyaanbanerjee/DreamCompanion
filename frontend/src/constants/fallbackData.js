@@ -1,27 +1,30 @@
+// Fallback and client-side simulator dataset for DreamCompanion.
+// Climax of TATA IPL 2023 Grand Final: CSK vs GT.
+
 export const INITIAL_MATCH_INFO = {
-  id: "ipl_2023_final",
-  title: "TATA IPL 2023 - Grand Final",
-  subtitle: "Chennai Super Kings vs Gujarat Titans",
-  venue: "Narendra Modi Stadium, Ahmedabad",
-  date: "May 29, 2023",
-  revised_target: 171,
-  total_overs: 15,
-  match_situation: "CSK chasing 171 in 15 overs (DLS revised). High-octane finish with MS Dhoni and Ravindra Jadeja."
+  "id": "ipl_2023_final",
+  "title": "TATA IPL 2023 - Grand Final",
+  "subtitle": "Chennai Super Kings vs Gujarat Titans",
+  "venue": "Narendra Modi Stadium, Ahmedabad",
+  "date": "May 29, 2023",
+  "revised_target": 171,
+  "total_overs": 15,
+  "match_situation": "CSK chasing 171 in 15 overs (DLS revised). High-octane finish with MS Dhoni and Ravindra Jadeja."
 };
 
 export const INITIAL_DELIVERY = {
   ball_index: 0,
-  over_display: "13.0",
+  over_display: '13.0',
   over_number: 13,
   ball_in_over: 0,
-  batsman: "Ambati Rayudu",
-  non_striker: "Shivam Dube",
-  bowler: "Mohit Sharma",
+  batsman: 'Ambati Rayudu',
+  non_striker: 'Shivam Dube',
+  bowler: 'Mohit Sharma',
   runs_scored: 0,
   is_wicket: false,
   dismissal: null,
   extra: 0,
-  score_after: "133/3",
+  score_after: '133/3',
   target: 171,
   runs_needed: 38,
   balls_remaining: 12,
@@ -29,13 +32,642 @@ export const INITIAL_DELIVERY = {
   rrr: 19.00,
   emotional_index: 55,
   fan_bpm: 98,
+  win_prob_csk: 42,
+  win_prob_gt: 58,
+  win_prob_delta: 0,
   is_milestone: false,
-  milestone_type: "START",
+  milestone_type: 'START',
   ai_commentary: "Welcome to the Corner! 38 needed off 12 balls. Mohit Sharma with the ball, Rayudu and Dube in the middle. Click 'Start Match' to begin the live simulation!",
   batsmen: [
-    { name: "Ambati Rayudu", runs: 7, balls: 5, fours: 0, sixes: 0, on_strike: true },
-    { name: "Shivam Dube", runs: 28, balls: 18, fours: 0, sixes: 2, on_strike: false }
+    { name: 'Ambati Rayudu', runs: 7, balls: 5, fours: 0, sixes: 0, on_strike: true },
+    { name: 'Shivam Dube', runs: 28, balls: 18, fours: 0, sixes: 2, on_strike: false }
   ],
-  bowler_stats: { name: "Mohit Sharma", overs: "1.0", maidens: 0, runs: 10, wickets: 1 }
+  bowler_stats: { name: 'Mohit Sharma', overs: '1.0', maidens: 0, runs: 10, wickets: 1 }
 };
 
+export const ALL_DELIVERIES = [
+  {
+    "ball_index": 1,
+    "over_display": "13.1",
+    "over_number": 13,
+    "ball_in_over": 1,
+    "batsman": "Ambati Rayudu",
+    "non_striker": "Shivam Dube",
+    "bowler": "Mohit Sharma",
+    "runs_scored": 6,
+    "is_wicket": false,
+    "dismissal": null,
+    "extra": 0,
+    "score_after": "139/3",
+    "target": 171,
+    "runs_needed": 32,
+    "balls_remaining": 11,
+    "crr": 10.42,
+    "rrr": 17.45,
+    "emotional_index": 72,
+    "fan_bpm": 118,
+    "win_prob_csk": 56,
+    "win_prob_gt": 44,
+    "win_prob_delta": 14,
+    "is_milestone": true,
+    "milestone_type": "SIX",
+    "ai_commentary": "BOOM! Ambati Rayudu launches Mohit Sharma downtown! That has cleared long-off with sheer muscle. Rayudu's farewell swansong is on fire!",
+    "batsmen": [
+      {
+        "name": "Ambati Rayudu",
+        "runs": 13,
+        "balls": 6,
+        "fours": 1,
+        "sixes": 1,
+        "on_strike": true
+      },
+      {
+        "name": "Shivam Dube",
+        "runs": 28,
+        "balls": 18,
+        "fours": 0,
+        "sixes": 2,
+        "on_strike": false
+      }
+    ],
+    "bowler_stats": {
+      "name": "Mohit Sharma",
+      "overs": "1.1",
+      "maidens": 0,
+      "runs": 16,
+      "wickets": 1
+    }
+  },
+  {
+    "ball_index": 2,
+    "over_display": "13.2",
+    "over_number": 13,
+    "ball_in_over": 2,
+    "batsman": "Ambati Rayudu",
+    "non_striker": "Shivam Dube",
+    "bowler": "Mohit Sharma",
+    "runs_scored": 4,
+    "is_wicket": false,
+    "dismissal": null,
+    "extra": 0,
+    "score_after": "143/3",
+    "target": 171,
+    "runs_needed": 28,
+    "balls_remaining": 10,
+    "crr": 10.72,
+    "rrr": 16.8,
+    "emotional_index": 78,
+    "fan_bpm": 126,
+    "win_prob_csk": 64,
+    "win_prob_gt": 36,
+    "win_prob_delta": 8,
+    "is_milestone": true,
+    "milestone_type": "FOUR",
+    "ai_commentary": "FOUR MORE! Rayudu backs away and carves it past extra cover! Pure timing and placement. Yellow flags wave furiously across Ahmedabad!",
+    "batsmen": [
+      {
+        "name": "Ambati Rayudu",
+        "runs": 17,
+        "balls": 7,
+        "fours": 2,
+        "sixes": 1,
+        "on_strike": true
+      },
+      {
+        "name": "Shivam Dube",
+        "runs": 28,
+        "balls": 18,
+        "fours": 0,
+        "sixes": 2,
+        "on_strike": false
+      }
+    ],
+    "bowler_stats": {
+      "name": "Mohit Sharma",
+      "overs": "1.2",
+      "maidens": 0,
+      "runs": 20,
+      "wickets": 1
+    }
+  },
+  {
+    "ball_index": 3,
+    "over_display": "13.3",
+    "over_number": 13,
+    "ball_in_over": 3,
+    "batsman": "Ambati Rayudu",
+    "non_striker": "Shivam Dube",
+    "bowler": "Mohit Sharma",
+    "runs_scored": 6,
+    "is_wicket": false,
+    "dismissal": null,
+    "extra": 0,
+    "score_after": "149/3",
+    "target": 171,
+    "runs_needed": 22,
+    "balls_remaining": 9,
+    "crr": 11.17,
+    "rrr": 14.67,
+    "emotional_index": 86,
+    "fan_bpm": 138,
+    "win_prob_csk": 76,
+    "win_prob_gt": 24,
+    "win_prob_delta": 12,
+    "is_milestone": true,
+    "milestone_type": "SIX",
+    "ai_commentary": "UNBELIEVABLE! 6, 4, 6! Rayudu hammers Mohit over extra cover for a colossal maximum! 16 off 3 balls. The Chennai dugout is on their feet!",
+    "batsmen": [
+      {
+        "name": "Ambati Rayudu",
+        "runs": 23,
+        "balls": 8,
+        "fours": 2,
+        "sixes": 2,
+        "on_strike": true
+      },
+      {
+        "name": "Shivam Dube",
+        "runs": 28,
+        "balls": 18,
+        "fours": 0,
+        "sixes": 2,
+        "on_strike": false
+      }
+    ],
+    "bowler_stats": {
+      "name": "Mohit Sharma",
+      "overs": "1.3",
+      "maidens": 0,
+      "runs": 26,
+      "wickets": 1
+    }
+  },
+  {
+    "ball_index": 4,
+    "over_display": "13.4",
+    "over_number": 13,
+    "ball_in_over": 4,
+    "batsman": "Ambati Rayudu",
+    "non_striker": "Shivam Dube",
+    "bowler": "Mohit Sharma",
+    "runs_scored": 0,
+    "is_wicket": true,
+    "dismissal": "c & b Mohit Sharma 19(8)",
+    "extra": 0,
+    "score_after": "149/4",
+    "target": 171,
+    "runs_needed": 22,
+    "balls_remaining": 8,
+    "crr": 10.89,
+    "rrr": 16.5,
+    "emotional_index": 65,
+    "fan_bpm": 142,
+    "win_prob_csk": 52,
+    "win_prob_gt": 48,
+    "win_prob_delta": -24,
+    "is_milestone": true,
+    "milestone_type": "WICKET",
+    "ai_commentary": "GONE! Mohit Sharma has the last laugh! Slower ball caught and bowled. Rayudu departs after a sensational cameo. And here comes THALA MS DHONI to a deafening roar!",
+    "batsmen": [
+      {
+        "name": "MS Dhoni",
+        "runs": 0,
+        "balls": 0,
+        "fours": 0,
+        "sixes": 0,
+        "on_strike": true
+      },
+      {
+        "name": "Shivam Dube",
+        "runs": 28,
+        "balls": 18,
+        "fours": 0,
+        "sixes": 2,
+        "on_strike": false
+      }
+    ],
+    "bowler_stats": {
+      "name": "Mohit Sharma",
+      "overs": "1.4",
+      "maidens": 0,
+      "runs": 26,
+      "wickets": 2
+    }
+  },
+  {
+    "ball_index": 5,
+    "over_display": "13.5",
+    "over_number": 13,
+    "ball_in_over": 5,
+    "batsman": "MS Dhoni",
+    "non_striker": "Shivam Dube",
+    "bowler": "Mohit Sharma",
+    "runs_scored": 0,
+    "is_wicket": true,
+    "dismissal": "c David Miller b Mohit Sharma 0(1)",
+    "extra": 0,
+    "score_after": "149/5",
+    "target": 171,
+    "runs_needed": 22,
+    "balls_remaining": 7,
+    "crr": 10.77,
+    "rrr": 18.86,
+    "emotional_index": 50,
+    "fan_bpm": 155,
+    "win_prob_csk": 24,
+    "win_prob_gt": 76,
+    "win_prob_delta": -28,
+    "is_milestone": true,
+    "milestone_type": "WICKET",
+    "ai_commentary": "HEARTBREAK! Silence falls over 100,000 fans! Dhoni pushes hard to extra cover, David Miller takes a sharp catch! MS Dhoni goes for a golden duck! Mohit Sharma is doing the unthinkable!",
+    "batsmen": [
+      {
+        "name": "Ravindra Jadeja",
+        "runs": 0,
+        "balls": 0,
+        "fours": 0,
+        "sixes": 0,
+        "on_strike": true
+      },
+      {
+        "name": "Shivam Dube",
+        "runs": 28,
+        "balls": 18,
+        "fours": 0,
+        "sixes": 2,
+        "on_strike": false
+      }
+    ],
+    "bowler_stats": {
+      "name": "Mohit Sharma",
+      "overs": "1.5",
+      "maidens": 0,
+      "runs": 26,
+      "wickets": 3
+    }
+  },
+  {
+    "ball_index": 6,
+    "over_display": "13.6",
+    "over_number": 13,
+    "ball_in_over": 6,
+    "batsman": "Ravindra Jadeja",
+    "non_striker": "Shivam Dube",
+    "bowler": "Mohit Sharma",
+    "runs_scored": 1,
+    "is_wicket": false,
+    "dismissal": null,
+    "extra": 0,
+    "score_after": "150/5",
+    "target": 171,
+    "runs_needed": 21,
+    "balls_remaining": 6,
+    "crr": 10.71,
+    "rrr": 21.0,
+    "emotional_index": 58,
+    "fan_bpm": 140,
+    "win_prob_csk": 22,
+    "win_prob_gt": 78,
+    "win_prob_delta": -2,
+    "is_milestone": false,
+    "milestone_type": "SINGLE",
+    "ai_commentary": "Jadeja drops it into the covers and scampers across for a single. End of an eventful, roller-coaster 13th over. 21 needed off 6 balls!",
+    "batsmen": [
+      {
+        "name": "Ravindra Jadeja",
+        "runs": 1,
+        "balls": 1,
+        "fours": 0,
+        "sixes": 0,
+        "on_strike": false
+      },
+      {
+        "name": "Shivam Dube",
+        "runs": 28,
+        "balls": 18,
+        "fours": 0,
+        "sixes": 2,
+        "on_strike": true
+      }
+    ],
+    "bowler_stats": {
+      "name": "Mohit Sharma",
+      "overs": "2.0",
+      "maidens": 0,
+      "runs": 27,
+      "wickets": 3
+    }
+  },
+  {
+    "ball_index": 7,
+    "over_display": "14.1",
+    "over_number": 14,
+    "ball_in_over": 1,
+    "batsman": "Shivam Dube",
+    "non_striker": "Ravindra Jadeja",
+    "bowler": "Mohit Sharma",
+    "runs_scored": 0,
+    "is_wicket": false,
+    "dismissal": null,
+    "extra": 0,
+    "score_after": "150/5",
+    "target": 171,
+    "runs_needed": 21,
+    "balls_remaining": 5,
+    "crr": 10.59,
+    "rrr": 25.2,
+    "emotional_index": 68,
+    "fan_bpm": 146,
+    "win_prob_csk": 14,
+    "win_prob_gt": 86,
+    "win_prob_delta": -8,
+    "is_milestone": false,
+    "milestone_type": "DOT",
+    "ai_commentary": "Laser-guided yorker! Mohit Sharma nails the blockhole at 134 kph. Shivam Dube digs it out back to the bowler. Dot ball! The pressure mounts exponentially!",
+    "batsmen": [
+      {
+        "name": "Shivam Dube",
+        "runs": 28,
+        "balls": 19,
+        "fours": 0,
+        "sixes": 2,
+        "on_strike": true
+      },
+      {
+        "name": "Ravindra Jadeja",
+        "runs": 1,
+        "balls": 1,
+        "fours": 0,
+        "sixes": 0,
+        "on_strike": false
+      }
+    ],
+    "bowler_stats": {
+      "name": "Mohit Sharma",
+      "overs": "2.1",
+      "maidens": 0,
+      "runs": 27,
+      "wickets": 3
+    }
+  },
+  {
+    "ball_index": 8,
+    "over_display": "14.2",
+    "over_number": 14,
+    "ball_in_over": 2,
+    "batsman": "Shivam Dube",
+    "non_striker": "Ravindra Jadeja",
+    "bowler": "Mohit Sharma",
+    "runs_scored": 1,
+    "is_wicket": false,
+    "dismissal": null,
+    "extra": 0,
+    "score_after": "151/5",
+    "target": 171,
+    "runs_needed": 20,
+    "balls_remaining": 4,
+    "crr": 10.53,
+    "rrr": 30.0,
+    "emotional_index": 74,
+    "fan_bpm": 152,
+    "win_prob_csk": 11,
+    "win_prob_gt": 89,
+    "win_prob_delta": -3,
+    "is_milestone": false,
+    "milestone_type": "SINGLE",
+    "ai_commentary": "Another pin-point yorker on middle stump. Dube squeezes it down to long-off for just one. 20 needed off 4 balls! Gujarat Titans believe!",
+    "batsmen": [
+      {
+        "name": "Ravindra Jadeja",
+        "runs": 1,
+        "balls": 1,
+        "fours": 0,
+        "sixes": 0,
+        "on_strike": true
+      },
+      {
+        "name": "Shivam Dube",
+        "runs": 29,
+        "balls": 20,
+        "fours": 0,
+        "sixes": 2,
+        "on_strike": false
+      }
+    ],
+    "bowler_stats": {
+      "name": "Mohit Sharma",
+      "overs": "2.2",
+      "maidens": 0,
+      "runs": 28,
+      "wickets": 3
+    }
+  },
+  {
+    "ball_index": 9,
+    "over_display": "14.3",
+    "over_number": 14,
+    "ball_in_over": 3,
+    "batsman": "Ravindra Jadeja",
+    "non_striker": "Shivam Dube",
+    "bowler": "Mohit Sharma",
+    "runs_scored": 1,
+    "is_wicket": false,
+    "dismissal": null,
+    "extra": 0,
+    "score_after": "152/5",
+    "target": 171,
+    "runs_needed": 19,
+    "balls_remaining": 3,
+    "crr": 10.48,
+    "rrr": 38.0,
+    "emotional_index": 79,
+    "fan_bpm": 158,
+    "win_prob_csk": 8,
+    "win_prob_gt": 92,
+    "win_prob_delta": -3,
+    "is_milestone": false,
+    "milestone_type": "SINGLE",
+    "ai_commentary": "Full toss wide outside off, Jadeja slashes it towards sweeper cover. Just a single. 19 needed off 3 balls now. The tension is peaking!",
+    "batsmen": [
+      {
+        "name": "Shivam Dube",
+        "runs": 29,
+        "balls": 20,
+        "fours": 0,
+        "sixes": 2,
+        "on_strike": true
+      },
+      {
+        "name": "Ravindra Jadeja",
+        "runs": 2,
+        "balls": 2,
+        "fours": 0,
+        "sixes": 0,
+        "on_strike": false
+      }
+    ],
+    "bowler_stats": {
+      "name": "Mohit Sharma",
+      "overs": "2.3",
+      "maidens": 0,
+      "runs": 29,
+      "wickets": 3
+    }
+  },
+  {
+    "ball_index": 10,
+    "over_display": "14.4",
+    "over_number": 14,
+    "ball_in_over": 4,
+    "batsman": "Shivam Dube",
+    "non_striker": "Ravindra Jadeja",
+    "bowler": "Mohit Sharma",
+    "runs_scored": 1,
+    "is_wicket": false,
+    "dismissal": null,
+    "extra": 0,
+    "score_after": "153/5",
+    "target": 171,
+    "runs_needed": 18,
+    "balls_remaining": 2,
+    "crr": 10.43,
+    "rrr": 54.0,
+    "emotional_index": 84,
+    "fan_bpm": 165,
+    "win_prob_csk": 5,
+    "win_prob_gt": 95,
+    "win_prob_delta": -3,
+    "is_milestone": false,
+    "milestone_type": "SINGLE",
+    "ai_commentary": "Mohit nails the yorker again! Dube can only drill it to long-on for a single. Ravindra Jadeja is back on strike. 10 needed off 2 balls! It all comes down to Sir Jadeja!",
+    "batsmen": [
+      {
+        "name": "Ravindra Jadeja",
+        "runs": 2,
+        "balls": 2,
+        "fours": 0,
+        "sixes": 0,
+        "on_strike": true
+      },
+      {
+        "name": "Shivam Dube",
+        "runs": 30,
+        "balls": 21,
+        "fours": 0,
+        "sixes": 2,
+        "on_strike": false
+      }
+    ],
+    "bowler_stats": {
+      "name": "Mohit Sharma",
+      "overs": "2.4",
+      "maidens": 0,
+      "runs": 30,
+      "wickets": 3
+    }
+  },
+  {
+    "ball_index": 11,
+    "over_display": "14.5",
+    "over_number": 14,
+    "ball_in_over": 5,
+    "batsman": "Ravindra Jadeja",
+    "non_striker": "Shivam Dube",
+    "bowler": "Mohit Sharma",
+    "runs_scored": 6,
+    "is_wicket": false,
+    "dismissal": null,
+    "extra": 0,
+    "score_after": "167/5",
+    "target": 171,
+    "runs_needed": 4,
+    "balls_remaining": 1,
+    "crr": 11.25,
+    "rrr": 24.0,
+    "emotional_index": 96,
+    "fan_bpm": 174,
+    "win_prob_csk": 54,
+    "win_prob_gt": 46,
+    "win_prob_delta": 49,
+    "is_milestone": true,
+    "milestone_type": "SIX",
+    "ai_commentary": "OH MY GOODNESS! SIX STRAIGHT DOWN THE GROUND! Ravindra Jadeja stands tall and sends Mohit Sharma soaring over long-on! That is clutch under astronomical pressure! 4 needed off 1 ball!",
+    "batsmen": [
+      {
+        "name": "Ravindra Jadeja",
+        "runs": 8,
+        "balls": 3,
+        "fours": 0,
+        "sixes": 1,
+        "on_strike": true
+      },
+      {
+        "name": "Shivam Dube",
+        "runs": 30,
+        "balls": 21,
+        "fours": 0,
+        "sixes": 2,
+        "on_strike": false
+      }
+    ],
+    "bowler_stats": {
+      "name": "Mohit Sharma",
+      "overs": "2.5",
+      "maidens": 0,
+      "runs": 36,
+      "wickets": 3
+    }
+  },
+  {
+    "ball_index": 12,
+    "over_display": "14.6",
+    "over_number": 14,
+    "ball_in_over": 6,
+    "batsman": "Ravindra Jadeja",
+    "non_striker": "Shivam Dube",
+    "bowler": "Mohit Sharma",
+    "runs_scored": 4,
+    "is_wicket": false,
+    "dismissal": null,
+    "extra": 0,
+    "score_after": "171/5",
+    "target": 171,
+    "runs_needed": 0,
+    "balls_remaining": 0,
+    "crr": 11.4,
+    "rrr": 0.0,
+    "emotional_index": 100,
+    "fan_bpm": 182,
+    "win_prob_csk": 100,
+    "win_prob_gt": 0,
+    "win_prob_delta": 46,
+    "is_milestone": true,
+    "milestone_type": "MATCH_WINNER",
+    "ai_commentary": "FOUR! HE'S DONE IT! RAVINDRA JADEJA CLIPS IT FINE PAST SHORT FINE LEG! CHENNAI SUPER KINGS WIN THEIR FIFTH IPL TITLE! Total pandemonium in Ahmedabad! Dhoni lifts Jadeja in pure bliss!",
+    "batsmen": [
+      {
+        "name": "Ravindra Jadeja",
+        "runs": 15,
+        "balls": 6,
+        "fours": 1,
+        "sixes": 1,
+        "on_strike": true
+      },
+      {
+        "name": "Shivam Dube",
+        "runs": 32,
+        "balls": 21,
+        "fours": 0,
+        "sixes": 2,
+        "on_strike": false
+      }
+    ],
+    "bowler_stats": {
+      "name": "Mohit Sharma",
+      "overs": "3.0",
+      "maidens": 0,
+      "runs": 40,
+      "wickets": 3
+    }
+  }
+];

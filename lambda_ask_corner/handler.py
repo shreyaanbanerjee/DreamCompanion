@@ -4,7 +4,7 @@ import json
 import os
 import urllib.request
 import urllib.error
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, Tuple
 
 from fan_lore import build_system_prompt
 
@@ -15,10 +15,25 @@ CORS_HEADERS = {
     "Content-Type": "application/json",
 }
 
+# Current supported Gemini models in order of priority
+GEMINI_MODELS = [
+    "models/gemini-3.5-flash",
+    "models/gemini-3.8-flash",
+    "models/gemini-flash-latest",
+    "models/gemini-2.5-flash",
+]
+
 
 def generate_fallback_fan_response(question: str, match_context: str = "") -> str:
     """Generate intelligent contextual response using Fan Lore Pack when no LLM API key is present."""
-    q_lower = question.lower()
+    q_lower = question.lower().strip()
+
+    # Friendly greeting handling
+    if q_lower in ["hi", "hello", "hey", "vanakkam", "sup", "yo", "hi!", "hello!", "hey there"]:
+        return (
+            "Vanakkam! Welcome to the CSK Corner. Ask me anything about this thrilling IPL final chase, "
+            "Dhoni's tactics, or Sir Jadeja's chances! Whistle Podu!"
+        )
 
     if any(k in q_lower for k in ["dhoni", "thala", "captain", "knee", "duck"]):
         return (
@@ -80,33 +95,37 @@ def call_anthropic_api(api_key: str, system_prompt: str, user_prompt: str) -> Op
         result = json.loads(resp.read().decode("utf-8"))
         content = result.get("content", [])
         if content and "text" in content[0]:
-            return content[0]["text"]
+            return content[0]["text"].strip()
     return None
 
 
-def call_gemini_api(api_key: str, system_prompt: str, user_prompt: str) -> Optional[str]:
-    """Call Google Gemini API via standard urllib."""
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}"
-    payload = {
-        "system_instruction": {"parts": [{"text": system_prompt}]},
-        "contents": [{"parts": [{"text": user_prompt}]}],
-        "generationConfig": {"maxOutputTokens": 300, "temperature": 0.7},
-    }
-    headers = {"Content-Type": "application/json"}
-    req = urllib.request.Request(url, data=json.dumps(payload).encode("utf-8"), headers=headers, method="POST")
-    with urllib.request.urlopen(req, timeout=10) as resp:
-        result = json.loads(resp.read().decode("utf-8"))
-        candidates = result.get("candidates", [])
-        if candidates:
-            parts = candidates[0].get("content", {}).get("parts", [])
-            if parts and "text" in parts[0]:
-                return parts[0]["text"]
+def call_gemini_api(api_key: str, system_prompt: str, user_prompt: str) -> Optional[Tuple[str, str]]:
+    """Call Google Gemini API trying active supported models."""
+    for model_name in GEMINI_MODELS:
+        url = f"https://generativelanguage.googleapis.com/v1beta/{model_name}:generateContent?key={api_key}"
+        payload = {
+            "system_instruction": {"parts": [{"text": system_prompt}]},
+            "contents": [{"parts": [{"text": user_prompt}]}],
+            "generationConfig": {"maxOutputTokens": 300, "temperature": 0.7},
+        }
+        headers = {"Content-Type": "application/json"}
+        req = urllib.request.Request(url, data=json.dumps(payload).encode("utf-8"), headers=headers, method="POST")
+        try:
+            with urllib.request.urlopen(req, timeout=10) as resp:
+                result = json.loads(resp.read().decode("utf-8"))
+                candidates = result.get("candidates", [])
+                if candidates:
+                    parts = candidates[0].get("content", {}).get("parts", [])
+                    if parts and "text" in parts[0]:
+                        short_model = model_name.replace("models/", "")
+                        return parts[0]["text"].strip(), short_model
+        except Exception:
+            continue
     return None
 
 
 def lambda_handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     """Main AWS Lambda handler for API Gateway."""
-    # Detect HTTP method (API Gateway v1 or v2)
     http_method = event.get("httpMethod") or event.get("requestContext", {}).get("http", {}).get("method", "GET")
 
     if http_method == "OPTIONS":
@@ -116,7 +135,6 @@ def lambda_handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             "body": json.dumps({"status": "preflight_ok"}),
         }
 
-    # Parse request body
     raw_body = event.get("body")
     if not raw_body:
         return {
@@ -164,15 +182,18 @@ def lambda_handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     if anthropic_key:
         try:
             ai_response = call_anthropic_api(anthropic_key, system_prompt, question)
-            provider = "anthropic"
-        except Exception as e:
+            if ai_response:
+                provider = "anthropic"
+        except Exception:
             ai_response = None
 
     if not ai_response and gemini_key:
         try:
-            ai_response = call_gemini_api(gemini_key, system_prompt, question)
-            provider = "gemini"
-        except Exception as e:
+            gemini_res = call_gemini_api(gemini_key, system_prompt, question)
+            if gemini_res:
+                ai_response, model_used = gemini_res
+                provider = f"gemini ({model_used})"
+        except Exception:
             ai_response = None
 
     if not ai_response:
@@ -186,7 +207,6 @@ def lambda_handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             "success": True,
             "response": ai_response,
             "provider": provider,
-            "persona": "CSK Corner Companion (Whistle Podu Edition)",
+            "persona": "CSK Corner Companion",
         }),
     }
-

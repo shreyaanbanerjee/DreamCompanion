@@ -153,6 +153,16 @@ async def ask_corner_endpoint(request: Request):
     """Direct route to Ask Corner AI chat service (mirrors AWS Lambda behavior)."""
     if not lambda_handler:
         raise HTTPException(status_code=500, detail="Ask Corner handler not loaded")
+    
+    # Ensure any live updates to .env are reflected immediately
+    env_file = Path(__file__).resolve().parent.parent.parent / ".env"
+    if env_file.exists():
+        try:
+            from dotenv import load_dotenv
+            load_dotenv(env_file, override=True)
+        except Exception:
+            pass
+
     body = await request.json()
     event = {
         "httpMethod": "POST",
