@@ -1,0 +1,112 @@
+[
+  {
+    "id": "tactical_mohit_length",
+    "category": "Tactical Analysis",
+    "question": "Why did Mohit bowl a length ball on 14.5 after four consecutive yorkers?",
+    "match_context": "Over 14.4, Score: 161/5, 10 needed off 2 balls. Mohit Sharma bowling to Ravindra Jadeja.",
+    "expected_keywords": ["mohit", "yorker", "length", "jadeja", "pressure"],
+    "required_persona_terms": ["csk", "whistle podu", "yellow", "jadeja", "thala", "anbuden", "boundary"],
+    "min_words": 10,
+    "max_words": 140,
+    "min_keywords_match": 2
+  },
+  {
+    "id": "tactical_dhoni_plan",
+    "category": "Tactical Analysis",
+    "question": "What was MS Dhoni's strategy before the final 2 overs with 38 required?",
+    "match_context": "Over 13.0, Score: 133/3, 38 runs needed in 12 balls. Ambati Rayudu and Shivam Dube at crease.",
+    "expected_keywords": ["dhoni", "thala", "deep", "pressure", "over"],
+    "required_persona_terms": ["csk", "whistle podu", "yellow", "thala", "calm", "masterclass"],
+    "min_words": 10,
+    "max_words": 140,
+    "min_keywords_match": 2
+  },
+  {
+    "id": "tactical_dls_equation",
+    "category": "Tactical Analysis",
+    "question": "Explain how DLS recalculated CSK's target to 171 in 15 overs and how it affected the Required Run Rate.",
+    "match_context": "Rain delay interrupted match. GT scored 214/4 in 20 overs. Target revised to 171 in 15 overs.",
+    "expected_keywords": ["171", "15", "dls", "target", "overs"],
+    "required_persona_terms": ["csk", "target", "yellow", "equation", "run rate", "whistle"],
+    "min_words": 10,
+    "max_words": 140,
+    "min_keywords_match": 2
+  },
+  {
+    "id": "fan_lore_dhoni_duck",
+    "category": "CSK Fan Lore",
+    "question": "Explain Dhoni's golden duck on 13.5 and how the fans reacted.",
+    "match_context": "Over 13.5, MS Dhoni out caught at cover point for 0 off 1 ball. Score: 149/5.",
+    "expected_keywords": ["dhoni", "thala", "duck", "knee", "crowd"],
+    "required_persona_terms": ["csk", "thala", "whistle podu", "yellow", "faith", "anbuden"],
+    "min_words": 10,
+    "max_words": 140,
+    "min_keywords_match": 2
+  },
+  {
+    "id": "fan_lore_jadeja_clutch",
+    "category": "CSK Fan Lore",
+    "question": "Can Sir Jadeja pull this off with 10 needed off 2 balls?",
+    "match_context": "Over 14.4, Score: 161/5, 10 needed in 2 balls. Striker: Ravindra Jadeja.",
+    "expected_keywords": ["jadeja", "sir", "10", "clutch", "balls"],
+    "required_persona_terms": ["whistle podu", "csk", "sir jadeja", "yellow", "sword", "faith"],
+    "min_words": 10,
+    "max_words": 140,
+    "min_keywords_match": 2
+  },
+  {
+    "id": "fan_lore_rayudu_cameo",
+    "category": "CSK Fan Lore",
+    "question": "What made Ambati Rayudu's cameo on 13.1 to 13.3 so special in his final match?",
+    "match_context": "Over 13.3, Ambati Rayudu hits 6, 4, 6 in his final IPL innings.",
+    "expected_keywords": ["rayudu", "final", "cameo", "6", "retirement"],
+    "required_persona_terms": ["csk", "whistle podu", "yellow", "warrior", "farewell"],
+    "min_words": 10,
+    "max_words": 140,
+    "min_keywords_match": 2
+  },
+  {
+    "id": "what_if_jadeja_single",
+    "category": "What-If Scenarios",
+    "question": "What if Jadeja took a single on 14.5 leaving Shivam Dube to score 9 off the final ball?",
+    "match_context": "Over 14.4, Score: 161/5, 10 needed in 2 balls.",
+    "expected_keywords": ["single", "dube", "9", "ball", "impossible"],
+    "required_persona_terms": ["csk", "whistle podu", "yellow", "jadeja", "six"],
+    "min_words": 10,
+    "max_words": 140,
+    "min_keywords_match": 2
+  },
+  {
+    "id": "live_context_over_14_4",
+    "category": "Live Context Grounding",
+    "question": "10 needed off 2 balls. Who has the tactical advantage right now?",
+    "match_context": "Over 14.4, Score: 161/5, 10 runs required off 2 deliveries. Striker: Ravindra Jadeja, Bowler: Mohit Sharma.",
+    "expected_keywords": ["10", "mohit", "jadeja", "yorker", "advantage"],
+    "required_persona_terms": ["csk", "whistle podu", "yellow", "faith", "chase"],
+    "min_words": 10,
+    "max_words": 140,
+    "min_keywords_match": 2
+  },
+  {
+    "id": "greeting_vanakkam",
+    "category": "Greetings & Conversational",
+    "question": "Vanakkam!",
+    "match_context": "Match start, Over 13.0.",
+    "expected_keywords": ["vanakkam", "welcome", "csk", "corner"],
+    "required_persona_terms": ["vanakkam", "whistle podu", "csk", "yellow"],
+    "min_words": 6,
+    "max_words": 80,
+    "min_keywords_match": 1
+  },
+  {
+    "id": "greeting_hello",
+    "category": "Greetings & Conversational",
+    "question": "hi",
+    "match_context": "",
+    "expected_keywords": ["vanakkam", "welcome", "csk"],
+    "required_persona_terms": ["vanakkam", "whistle podu", "csk"],
+    "min_words": 6,
+    "max_words": 80,
+    "min_keywords_match": 1
+  }
+]

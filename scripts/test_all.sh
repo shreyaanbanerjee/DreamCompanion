@@ -20,5 +20,8 @@ cd frontend && npm run build && cd "$SCRIPT_DIR"
 echo "=== 5. Synthesizing AWS CDK CloudFormation Stack ==="
 cd infra && npx cdk synth > /dev/null && cd "$SCRIPT_DIR"
 
+echo "=== 6. Testing AI Prompt Response Quality & Factuality ==="
+PYTHONPATH=lambda_ask_corner .venv/bin/python scripts/evaluate_ai_prompts.py
+
 echo "✓ ALL TESTS AND SYNTHESIS PASSED SUCCESSFULLY!"
 

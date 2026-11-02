@@ -148,7 +148,11 @@ DreamCompanion/
 ├── lambda_ask_corner/            # AWS Lambda Serverless AI Handler
 │   ├── handler.py                     # Zero-dependency Lambda handler and Gemini router
 │   ├── fan_lore.py                    # CSK Fan Lore Pack knowledge base
+│   ├── ai_eval/                       # AI Prompt Evaluation Framework
+│   │   ├── benchmark_suite.json       # 10 benchmark fan prompts & evaluation rules
+│   │   └── evaluator.py               # Prompt scoring engine (persona, lore, latency)
 │   ├── test_handler.py                # Lambda test suite (CORS, prompt formatting, errors)
+│   ├── test_ai_eval.py                # Pytest suite for automated prompt testing
 │   └── requirements.txt
 ├── infra/                        # AWS CDK v2 Infrastructure as Code (TypeScript)
 │   ├── bin/
@@ -162,7 +166,8 @@ DreamCompanion/
 │   └── template.yaml
 ├── scripts/
 │   ├── run_local.sh                   # Launches FastAPI (:8000) and Vite (:3000) concurrently
-│   └── test_all.sh                    # Runs all unit tests, builds bundle, synthesizes CDK
+│   ├── test_all.sh                    # Runs all unit tests, builds bundle, synthesizes CDK, runs AI eval
+│   └── evaluate_ai_prompts.py         # AI Prompt evaluation runner (local / live API)
 ├── deploy.sh                     # Automated deployment script for AWS
 ├── AGENTS.md                     # Agent workspace configuration and operational guardrails
 ├── .env.example                  # Environment configuration template
@@ -230,18 +235,42 @@ Run the full end-to-end verification pipeline with a single command:
 ./scripts/test_all.sh
 ```
 
-This script executes four sequential verification gates:
-1. **Backend Simulator Unit Tests** (10 tests via `pytest`): validates state transitions, ball increments, pause/resume behavior, and REST endpoints.
-2. **Lambda Ask Corner Unit Tests** (5 tests via `pytest`): validates CORS handling, prompt formatting, Gemini routing, and error status codes.
-3. **Frontend Production Build**: builds the bundle via Vite (`frontend/dist`) to verify zero TypeScript/JSX errors.
-4. **AWS CDK Synthesis**: validates CloudFormation template generation via `cdk synth`.
+This script executes six sequential verification gates:
+1. **Backend Simulator Unit Tests** (18 tests via `pytest`): validates state transitions, ball increments, pause/resume behavior, and REST endpoints.
+2. **Lambda Ask Corner Unit Tests** (8 tests via `pytest`): validates CORS handling, prompt formatting, Gemini routing, and error status codes.
+3. **Frontend Integrity & Unit Tests**: validates 12 climax deliveries, audio synthesizer, and API endpoints.
+4. **Frontend Production Build**: builds the bundle via Vite (`frontend/dist`) to verify zero TypeScript/JSX errors.
+5. **AWS CDK Synthesis**: validates CloudFormation template generation via `cdk synth`.
+6. **AI Prompt Quality & Factuality Evaluation**: runs the automated evaluation pipeline across 10 benchmark scenarios to verify persona alignment, tactical cricket grounding, conciseness, latency, and absence of robotic clichés.
 
-Individual test commands:
+### AI Prompt Response Quality Pipeline
+
+The AI evaluation pipeline (`scripts/evaluate_ai_prompts.py`) ensures that "Ask Corner" AI responses meet strict production standards:
+
+- **Persona Alignment (25%)**: Verifies Chennai Super Kings authentic voice, tone, and cultural vocabulary (Anbuden, Whistle Podu, Thala, Yellow army).
+- **Factual Grounding (35%)**: Tests tactical match accuracy (e.g. 171 DLS target, Mohit's blockhole execution, Rayudu's 19 off 8, Jadeja's 10 off 2).
+- **Conciseness (20%)**: Enforces strict word limits (15–120 words) suitable for live match glanceability.
+- **Anti-Slop Guard (20%)**: Rejects robotic boilerplate phrases (e.g. *"As an AI language model"*, *"It is important to remember"*).
+- **Latency Threshold**: Demands response times $< 6.0$s (averaging ~0.5s with failover guardrails).
+
+Run the AI evaluation locally:
+```bash
+# Run local evaluation (Lambda handler + CSK Fan Lore fallback)
+PYTHONPATH=lambda_ask_corner .venv/bin/python scripts/evaluate_ai_prompts.py
+
+# Run AI evaluation via pytest
+PYTHONPATH=lambda_ask_corner .venv/bin/pytest lambda_ask_corner/test_ai_eval.py -v
+
+# Run evaluation against live AWS API Gateway endpoint
+PYTHONPATH=lambda_ask_corner .venv/bin/python scripts/evaluate_ai_prompts.py --live
+```
+
+Individual component tests:
 ```bash
 # Run backend tests only
 PYTHONPATH=backend .venv/bin/pytest backend/tests/ -v
 
-# Run Lambda tests only
+# Run Lambda unit tests only
 PYTHONPATH=lambda_ask_corner .venv/bin/pytest lambda_ask_corner/test_handler.py -v
 
 # Run frontend build only

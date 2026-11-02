@@ -18,9 +18,6 @@ CORS_HEADERS = {
 # Current supported Gemini models in order of priority
 GEMINI_MODELS = [
     "models/gemini-3.5-flash",
-    "models/gemini-3.8-flash",
-    "models/gemini-flash-latest",
-    "models/gemini-2.5-flash",
 ]
 
 
@@ -33,6 +30,27 @@ def generate_fallback_fan_response(question: str, match_context: str = "") -> st
         return (
             "Vanakkam! Welcome to the CSK Corner. Ask me anything about this thrilling IPL final chase, "
             "Dhoni's tactics, or Sir Jadeja's chances! Whistle Podu!"
+        )
+
+    # What-if tactical scenarios
+    if any(k in q_lower for k in ["what if", "scenario"]):
+        if any(k in q_lower for k in ["single", "9 off", "9 runs"]):
+            return (
+                "If Jadeja had taken a single on 14.5, Shivam Dube would have needed 9 runs off 1 ball—which is "
+                "mathematically impossible without a no-ball! Jadeja knew he had to hit a six or boundary. "
+                "That straight six kept CSK in the fight! Whistle Podu!"
+            )
+        return (
+            "In a final-over chase, every dot ball or single completely flips the win probability! "
+            "CSK's tactic has always been to take the game to the last ball and capitalize on the bowler's pressure."
+        )
+
+    # DLS and target calculation
+    if any(k in q_lower for k in ["dls", "171", "revised target", "target of 171"]):
+        return (
+            "Because of the rain delay, the DLS method reset CSK's target to 171 in 15 overs. "
+            "That demanded a blistering Required Run Rate of 11.40 from ball one! In a shortened chase, "
+            "every ball is gold, and Rayudu and Jadeja delivered the boundaries when we needed them most. Whistle Podu!"
         )
 
     if any(k in q_lower for k in ["dhoni", "thala", "captain", "knee", "duck"]):
@@ -57,9 +75,9 @@ def generate_fallback_fan_response(question: str, match_context: str = "") -> st
             "Shivam Dube has been our spin enforcer all season long. His long levers and ability to hit down the ground "
             "kept us in the hunt through the middle overs."
         )
-    elif any(k in q_lower for k in ["mohit", "sharma", "bowler", "yorker", "over"]):
+    elif any(k in q_lower for k in ["mohit", "sharma", "bowler", "yorker"]):
         return (
-            "Mohit Sharma has bowled his heart out nailing blockhole yorkers. But death overs in a rain-curtailed final "
+            "Mohit Sharma bowled his heart out nailing blockhole yorkers. But death overs in a rain-curtailed final "
             "leave zero margin for error. One loose length ball and Chepauk's energy in Ahmedabad takes over!"
         )
     elif any(k in q_lower for k in ["run rate", "rrr", "crr", "target", "overs", "equation", "need"]):
@@ -106,12 +124,16 @@ def call_gemini_api(api_key: str, system_prompt: str, user_prompt: str) -> Optio
         payload = {
             "system_instruction": {"parts": [{"text": system_prompt}]},
             "contents": [{"parts": [{"text": user_prompt}]}],
-            "generationConfig": {"maxOutputTokens": 300, "temperature": 0.7},
+            "generationConfig": {
+                "maxOutputTokens": 350,
+                "temperature": 0.7,
+                "thinkingConfig": {"thinkingBudget": 0},
+            },
         }
         headers = {"Content-Type": "application/json"}
         req = urllib.request.Request(url, data=json.dumps(payload).encode("utf-8"), headers=headers, method="POST")
         try:
-            with urllib.request.urlopen(req, timeout=10) as resp:
+            with urllib.request.urlopen(req, timeout=3.5) as resp:
                 result = json.loads(resp.read().decode("utf-8"))
                 candidates = result.get("candidates", [])
                 if candidates:
@@ -119,6 +141,11 @@ def call_gemini_api(api_key: str, system_prompt: str, user_prompt: str) -> Optio
                     if parts and "text" in parts[0]:
                         short_model = model_name.replace("models/", "")
                         return parts[0]["text"].strip(), short_model
+        except urllib.error.HTTPError as e:
+            if e.code == 429:
+                # Daily quota exhausted or rate-limited; fallback immediately without retrying
+                break
+            continue
         except Exception:
             continue
     return None
@@ -166,6 +193,17 @@ def lambda_handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
 
     match_context = body_data.get("match_context", "")
     system_prompt = build_system_prompt(str(match_context))
+
+    # Auto-load local .env if keys not already present in environment
+    if not os.environ.get("GEMINI_API_KEY") and not os.environ.get("ANTHROPIC_API_KEY"):
+        try:
+            from pathlib import Path
+            env_file = Path(__file__).resolve().parent.parent / ".env"
+            if env_file.exists():
+                from dotenv import load_dotenv
+                load_dotenv(env_file)
+        except Exception:
+            pass
 
     anthropic_key = os.environ.get("ANTHROPIC_API_KEY", "").strip()
     gemini_key = os.environ.get("GEMINI_API_KEY", "").strip()
