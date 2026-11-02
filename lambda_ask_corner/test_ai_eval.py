@@ -28,3 +28,4 @@ def test_prompt_response_quality(test_case):
     assert result["composite_score"] >= 70.0
     assert len(result["metrics"]["slop_detected"]) == 0
     assert result["latency_s"] < 6.0
+
