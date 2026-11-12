@@ -74,11 +74,12 @@ class PromptEvaluator:
             1
         )
 
+        max_latency = 8.5 if provider in ("live_api", "live") else 6.0
         passed = (
             composite_score >= 70.0
             and len(slop_detected) == 0
             and len(matched_keywords) >= min_required
-            and latency_s < 6.0
+            and latency_s < max_latency
         )
 
         return {
@@ -150,7 +151,7 @@ class PromptEvaluator:
 
         start_time = time.time()
         try:
-            with urllib.request.urlopen(req, timeout=8) as resp:
+            with urllib.request.urlopen(req, timeout=12) as resp:
                 latency = time.time() - start_time
                 body_data = json.loads(resp.read().decode("utf-8"))
                 response_text = body_data.get("response", "")
