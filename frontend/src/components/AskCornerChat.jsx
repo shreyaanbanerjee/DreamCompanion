@@ -6,6 +6,8 @@ const PROMPT_SUGGESTIONS = [
   "Explain Dhoni's duck on 13.5",
   "Why did Mohit bowl a length ball on 14.5?",
   "How did DLS calculate 171?",
+  "What was Rahane's impact in the chase?",
+  "Explain the win probability swings",
 ];
 
 export default function AskCornerChat({ currentDelivery, externalPrompt }) {
@@ -93,9 +95,29 @@ export default function AskCornerChat({ currentDelivery, externalPrompt }) {
               Match intelligence & fan context (AWS Lambda + Gemini)
             </div>
           </div>
-          <span className="text-[10px] text-slate-400 bg-slate-900 px-2 py-0.5 rounded border border-slate-800 font-mono">
-            Live
-          </span>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => {
+                setMessages([
+                  {
+                    id: Date.now(),
+                    sender: 'bot',
+                    text: "Vanakkam! I'm your Corner Assistant for this IPL Final chase. Ask me about Dhoni's tactics, Sir Jadeja's chances, or the match situation.",
+                    timestamp: 'Reset',
+                    provider: 'Assistant',
+                  },
+                ]);
+              }}
+              className="text-[10px] text-slate-400 hover:text-slate-200 bg-slate-900 hover:bg-slate-800 px-2 py-0.5 rounded border border-slate-800 font-mono transition-colors"
+              title="Clear conversation history"
+            >
+              Clear Chat
+            </button>
+            <span className="text-[10px] text-slate-400 bg-slate-900 px-2 py-0.5 rounded border border-slate-800 font-mono">
+              Live
+            </span>
+          </div>
         </div>
 
         {/* Suggestion Chips */}

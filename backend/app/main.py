@@ -56,6 +56,10 @@ class ConnectionManager:
             except Exception as e:
                 logger.warning("Failed to send to client, removing: %s", e)
                 self.active_connections.discard(connection)
+                try:
+                    await connection.close()
+                except Exception:
+                    pass
 
 
 manager = ConnectionManager()
@@ -163,13 +167,35 @@ async def ask_corner_endpoint(request: Request):
         except Exception:
             pass
 
-    body = await request.json()
+    try:
+        raw_body = await request.body()
+        if not raw_body:
+            raise HTTPException(status_code=400, detail="Missing request body")
+        if len(raw_body) > 65536:  # 64KB max payload guard
+            raise HTTPException(status_code=413, detail="Payload too large")
+        body = json.loads(raw_body.decode("utf-8"))
+        if not isinstance(body, dict):
+            raise HTTPException(status_code=400, detail="Request body must be a JSON object")
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Invalid JSON: {str(e)}")
+
     event = {
         "httpMethod": "POST",
         "body": json.dumps(body),
     }
     result = lambda_handler(event, None)
-    return json.loads(result["body"])
+    status_code = result.get("statusCode", 200)
+    body_str = result.get("body", "{}")
+    try:
+        parsed_body = json.loads(body_str)
+    except Exception:
+        parsed_body = {"response": body_str}
+
+    if status_code != 200:
+        raise HTTPException(status_code=status_code, detail=parsed_body.get("error", "Error processing request"))
+    return parsed_body
 
 
 @app.post("/api/simulator/control")
@@ -248,12 +274,18 @@ async def websocket_simulator_endpoint(websocket: WebSocket):
                             "state": simulator.get_state().model_dump(),
                         })
                 elif action == "set_interval":
-                    interval = float(data.get("interval", 5.0))
+                    try:
+                        raw_val = data.get("interval", 5.0)
+                        interval = float(raw_val)
+                    except (ValueError, TypeError):
+                        interval = 5.0
                     simulator.set_interval(interval)
                     await manager.broadcast({
                         "type": "control_set_interval",
                         "interval": simulator.interval_seconds,
                     })
+                elif action:
+                    await websocket.send_json({"type": "error", "message": f"Unknown action: {action}"})
             except json.JSONDecodeError:
                 await websocket.send_json({"type": "error", "message": "Invalid JSON format."})
     except WebSocketDisconnect:

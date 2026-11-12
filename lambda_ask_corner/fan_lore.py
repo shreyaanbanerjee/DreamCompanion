@@ -11,7 +11,20 @@ KEY LEGENDS & EMOTIONAL LORE:
 - MS Dhoni ("Thala" / Leader): The heartbeat of CSK. Ice-cool demeanor, lightning-quick stumpings behind the stumps, unmatched tactical captaincy. In 2023, he played the entire tournament with a heavily strapped knee injury, enduring excruciating pain for the fans. His golden duck in the 14th over broke 100,000 hearts, but his faith in Ravindra Jadeja won the championship.
 - Ravindra Jadeja ("Sir Jadeja" / "Thalapathy"): The ultimate clutch warrior. Famous for his ferocious left-arm darts, electric fielding, and his trademark 'Sword Dance' bat celebration. Needing 10 runs off 2 balls against Mohit Sharma, he struck a straight six and clipped the final ball for four to claim the title. Dhoni lifting him in the air after the final ball is one of the most emotional images in sports history.
 - Ambati Rayudu: Announced his retirement right before this 2023 final. Smashed 6, 4, 6 in the 13th over off Mohit Sharma to keep the chase alive. Dhoni invited him to lift the trophy alongside Jadeja.
-- Shivam Dube: The designated spin-slayer and giant six-hitter.
+- Shivam Dube: The designated spin-slayer whose towering straight sixes against Rashid Khan kept CSK within touching distance of the required run rate.
+- Ajinkya Rahane: Reborn in canary yellow! Scored a blistering 27 off 13 balls with 2 sixes and 2 fours, giving CSK essential middle-overs momentum.
+- Ruturaj Gaikwad & Devon Conway: The rock-solid opening partnership that blasted 52 runs in the 4-over powerplay to build the foundation for the 171-run chase.
+- Sai Sudharsan (GT): The young left-hander who played the innings of a lifetime with 96 off 47 balls to propel Gujarat to 214/4 before rain arrived.
+- Mohit Sharma (GT): Nailed 4 pin-point yorkers in the final over before missing his length by inches on ball 5.
+- Rashid Khan & Noor Ahmad (GT): Afghan spin duo who applied massive pressure in the middle overs.
+
+MATCH METRICS & EMOTIONAL SWINGS:
+- Target: 171 in 15 overs (DLS revised from 215 target). Required Run Rate was 11.40 from ball one.
+- 13.5: Dhoni's golden duck dropped CSK win probability down to 24%.
+- 14.4: After Mohit's 4th consecutive yorker, CSK needed 10 off 2 balls. Win probability dropped to a match-low 5%, fan heart rate surged past 150 BPM, and the ECG tension index hit 94%.
+- 14.5: Jadeja's flat straight six sparked an unprecedented +49% Win Delta shift in a single delivery, lifting CSK to 54%.
+- 14.6: Low full toss on pads clipped fine for four! 100% win probability and 5th IPL title!
+- Championships: 5 titles (2010, 2011, 2018, 2021, 2023). Home fortress MA Chidambaram Stadium (Chepauk / Anbuden).
 
 THE 2023 FINAL CLIMAX SCENARIO:
 - Venue: Narendra Modi Stadium, Ahmedabad.

@@ -61,8 +61,14 @@ class MatchSimulator:
             self.status = "completed"
 
     def set_interval(self, seconds: float) -> None:
-        """Set interval between pushed deliveries."""
-        self.interval_seconds = max(0.5, float(seconds))
+        """Set interval between pushed deliveries (clamped between 0.2s and 60.0s)."""
+        try:
+            val = float(seconds)
+            if val != val:  # Handle NaN
+                val = 5.0
+        except (ValueError, TypeError):
+            val = 5.0
+        self.interval_seconds = min(60.0, max(0.2, val))
 
     def get_state(self) -> SimulatorState:
         """Return snapshot of simulator state."""

@@ -236,12 +236,12 @@ Run the full end-to-end verification pipeline with a single command:
 ```
 
 This script executes six sequential verification gates:
-1. **Backend Simulator Unit Tests** (18 tests via `pytest`): validates state transitions, ball increments, pause/resume behavior, and REST endpoints.
-2. **Lambda Ask Corner Unit Tests** (8 tests via `pytest`): validates CORS handling, prompt formatting, Gemini routing, and error status codes.
-3. **Frontend Integrity & Unit Tests**: validates 12 climax deliveries, audio synthesizer, and API endpoints.
+1. **Backend Simulator Unit Tests** (23 tests via `pytest`): validates state transitions, ball increments, pause/resume behavior, interval boundaries, error handling, and REST endpoints.
+2. **Lambda Ask Corner Unit Tests** (11 tests via `pytest`): validates CORS handling, base64 payloads, prompt formatting, fan lore expansion, Gemini routing, and error status codes.
+3. **Frontend Integrity & Component Scenario Tests**: validates 12 climax deliveries, audio synthesizer, API endpoints, plus exhaustive component testing of every button, div, radar, split bar, and scenario card.
 4. **Frontend Production Build**: builds the bundle via Vite (`frontend/dist`) to verify zero TypeScript/JSX errors.
 5. **AWS CDK Synthesis**: validates CloudFormation template generation via `cdk synth`.
-6. **AI Prompt Quality & Factuality Evaluation**: runs the automated evaluation pipeline across 10 benchmark scenarios to verify persona alignment, tactical cricket grounding, conciseness, latency, and absence of robotic clichés.
+6. **AI Prompt Quality & Factuality Evaluation**: runs the automated evaluation pipeline across 20 benchmark scenarios to verify persona alignment, tactical cricket grounding, conciseness, latency, and absence of robotic clichés.
 
 ### AI Prompt Response Quality Pipeline
 

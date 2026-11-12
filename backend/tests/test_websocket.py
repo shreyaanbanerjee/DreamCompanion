@@ -53,3 +53,41 @@ def test_websocket_invalid_json():
         websocket.send_text("this-is-not-json")
         err_response = websocket.receive_json()
         assert err_response["type"] == "error"
+
+
+def test_websocket_invalid_interval_and_unknown_action():
+    with client.websocket_connect("/ws/simulator") as websocket:
+        websocket.receive_json()
+
+        # Non-numeric interval string (should fallback to safe default rather than crash)
+        websocket.send_text(json.dumps({"action": "set_interval", "interval": "invalid_string"}))
+        res = websocket.receive_json()
+        assert res["type"] == "control_set_interval"
+        assert res["interval"] == 5.0
+
+        # Unknown action
+        websocket.send_text(json.dumps({"action": "unknown_action_xyz"}))
+        err_res = websocket.receive_json()
+        assert err_res["type"] == "error"
+        assert "Unknown action" in err_res["message"]
+
+
+def test_websocket_start_and_pause():
+    with client.websocket_connect("/ws/simulator") as websocket:
+        websocket.receive_json()
+
+        # Start
+        websocket.send_text(json.dumps({"action": "start"}))
+        start_res = websocket.receive_json()
+        assert start_res["type"] == "control_start"
+        assert start_res["state"]["status"] == "running"
+
+        # Pause
+        websocket.send_text(json.dumps({"action": "pause"}))
+        pause_res = websocket.receive_json()
+        assert pause_res["type"] == "control_pause"
+        assert pause_res["state"]["status"] == "paused"
+
+        # Clean up with reset
+        websocket.send_text(json.dumps({"action": "reset"}))
+        websocket.receive_json()

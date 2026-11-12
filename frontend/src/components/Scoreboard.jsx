@@ -34,6 +34,14 @@ export default function Scoreboard({
   };
 
   const strikeRate = (runs, balls) => (balls > 0 ? ((runs / balls) * 100).toFixed(1) : '0.0');
+  const calculateEconomy = (runs, oversStr) => {
+    if (!oversStr) return '0.0';
+    const parts = String(oversStr).split('.');
+    const completedOvers = parseInt(parts[0], 10) || 0;
+    const ballsInOver = parseInt(parts[1], 10) || 0;
+    const totalBalls = completedOvers * 6 + ballsInOver;
+    return totalBalls > 0 ? (runs / (totalBalls / 6)).toFixed(1) : '0.0';
+  };
   const isMatchWon = displayDelivery.runs_needed <= 0 && displayDelivery.ball_index > 0;
 
   const handleBallClick = (ball) => {
@@ -213,7 +221,7 @@ export default function Scoreboard({
                   <span className="text-slate-200">{displayDelivery.bowler_stats.runs}</span>
                   <span className="font-bold text-amber-300">{displayDelivery.bowler_stats.wickets}</span>
                   <span className="text-slate-400 text-right min-w-[36px]">
-                    {(displayDelivery.bowler_stats.runs / (parseFloat(displayDelivery.bowler_stats.overs) || 1)).toFixed(1)}
+                    {calculateEconomy(displayDelivery.bowler_stats.runs, displayDelivery.bowler_stats.overs)}
                   </span>
                 </div>
               </div>

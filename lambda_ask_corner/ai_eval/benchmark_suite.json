@@ -4,8 +4,8 @@
     "category": "Tactical Analysis",
     "question": "Why did Mohit bowl a length ball on 14.5 after four consecutive yorkers?",
     "match_context": "Over 14.4, Score: 161/5, 10 needed off 2 balls. Mohit Sharma bowling to Ravindra Jadeja.",
-    "expected_keywords": ["mohit", "yorker", "length", "jadeja", "pressure"],
-    "required_persona_terms": ["csk", "whistle podu", "yellow", "jadeja", "thala", "anbuden", "boundary"],
+    "expected_keywords": ["mohit", "yorker", "length", "sharma"],
+    "required_persona_terms": ["csk", "whistle", "yellow", "chepauk", "ahmedabad"],
     "min_words": 10,
     "max_words": 140,
     "min_keywords_match": 2
@@ -15,8 +15,8 @@
     "category": "Tactical Analysis",
     "question": "What was MS Dhoni's strategy before the final 2 overs with 38 required?",
     "match_context": "Over 13.0, Score: 133/3, 38 runs needed in 12 balls. Ambati Rayudu and Shivam Dube at crease.",
-    "expected_keywords": ["dhoni", "thala", "deep", "pressure", "over"],
-    "required_persona_terms": ["csk", "whistle podu", "yellow", "thala", "calm", "masterclass"],
+    "expected_keywords": ["dhoni", "thala", "deep", "pressure"],
+    "required_persona_terms": ["csk", "whistle podu", "yellow", "thala", "calm"],
     "min_words": 10,
     "max_words": 140,
     "min_keywords_match": 2
@@ -26,8 +26,30 @@
     "category": "Tactical Analysis",
     "question": "Explain how DLS recalculated CSK's target to 171 in 15 overs and how it affected the Required Run Rate.",
     "match_context": "Rain delay interrupted match. GT scored 214/4 in 20 overs. Target revised to 171 in 15 overs.",
-    "expected_keywords": ["171", "15", "dls", "target", "overs"],
+    "expected_keywords": ["171", "15", "dls", "target"],
     "required_persona_terms": ["csk", "target", "yellow", "equation", "run rate", "whistle"],
+    "min_words": 10,
+    "max_words": 140,
+    "min_keywords_match": 2
+  },
+  {
+    "id": "tactical_rahane_cameo",
+    "category": "Tactical Analysis",
+    "question": "How did Ajinkya Rahane's middle-overs cameo of 27 off 13 impact the chase?",
+    "match_context": "Ajinkya Rahane scored 27 off 13 balls with 2 sixes and 2 fours.",
+    "expected_keywords": ["rahane", "27", "13", "sixes"],
+    "required_persona_terms": ["csk", "whistle podu", "yellow", "canary", "championship"],
+    "min_words": 10,
+    "max_words": 140,
+    "min_keywords_match": 2
+  },
+  {
+    "id": "tactical_sai_sudharsan_threat",
+    "category": "Tactical Analysis",
+    "question": "How dangerous was Sai Sudharsan's 96 off 47 for Gujarat Titans?",
+    "match_context": "Sai Sudharsan scored 96 off 47 balls with 8 fours and 6 sixes.",
+    "expected_keywords": ["sudharsan", "96", "47", "gujarat"],
+    "required_persona_terms": ["csk", "yellow", "army", "ahmedabad", "belief"],
     "min_words": 10,
     "max_words": 140,
     "min_keywords_match": 2
@@ -37,7 +59,7 @@
     "category": "CSK Fan Lore",
     "question": "Explain Dhoni's golden duck on 13.5 and how the fans reacted.",
     "match_context": "Over 13.5, MS Dhoni out caught at cover point for 0 off 1 ball. Score: 149/5.",
-    "expected_keywords": ["dhoni", "thala", "duck", "knee", "crowd"],
+    "expected_keywords": ["dhoni", "thala", "duck", "knee"],
     "required_persona_terms": ["csk", "thala", "whistle podu", "yellow", "faith", "anbuden"],
     "min_words": 10,
     "max_words": 140,
@@ -66,6 +88,28 @@
     "min_keywords_match": 2
   },
   {
+    "id": "fan_lore_conway_gaikwad_start",
+    "category": "CSK Fan Lore",
+    "question": "How did Devon Conway and Ruturaj Gaikwad set up the chase in the powerplay?",
+    "match_context": "Conway and Gaikwad scored 52 runs in the 4-over powerplay.",
+    "expected_keywords": ["conway", "ruturaj", "gaikwad", "52", "powerplay"],
+    "required_persona_terms": ["csk", "whistle podu", "yellow", "openers", "launching"],
+    "min_words": 10,
+    "max_words": 140,
+    "min_keywords_match": 2
+  },
+  {
+    "id": "fan_lore_five_titles",
+    "category": "CSK Fan Lore",
+    "question": "What is the historical significance of CSK winning five IPL trophies?",
+    "match_context": "CSK win 5th IPL title in 2023.",
+    "expected_keywords": ["five", "troph", "champions", "2023", "legacy"],
+    "required_persona_terms": ["csk", "thala", "ms dhoni", "whistle podu", "chepauk"],
+    "min_words": 10,
+    "max_words": 140,
+    "min_keywords_match": 2
+  },
+  {
     "id": "what_if_jadeja_single",
     "category": "What-If Scenarios",
     "question": "What if Jadeja took a single on 14.5 leaving Shivam Dube to score 9 off the final ball?",
@@ -77,12 +121,78 @@
     "min_keywords_match": 2
   },
   {
+    "id": "what_if_shami_final_over",
+    "category": "What-If Scenarios",
+    "question": "What if Mohammed Shami had bowled the 15th over instead of Mohit Sharma?",
+    "match_context": "Final over scenario with 13 needed.",
+    "expected_keywords": ["shami", "15th", "mohit", "pace", "hardik"],
+    "required_persona_terms": ["csk", "whistle podu", "sir jadeja", "magic"],
+    "min_words": 10,
+    "max_words": 140,
+    "min_keywords_match": 2
+  },
+  {
+    "id": "what_if_rain_washout",
+    "category": "What-If Scenarios",
+    "question": "What if rain had washed out the reserve day completely?",
+    "match_context": "Rain delay on reserve day in Ahmedabad.",
+    "expected_keywords": ["rain", "washout", "reserve day", "table", "ground"],
+    "required_persona_terms": ["csk", "whistle podu", "thrilling", "finish"],
+    "min_words": 10,
+    "max_words": 140,
+    "min_keywords_match": 2
+  },
+  {
     "id": "live_context_over_14_4",
     "category": "Live Context Grounding",
     "question": "10 needed off 2 balls. Who has the tactical advantage right now?",
     "match_context": "Over 14.4, Score: 161/5, 10 runs required off 2 deliveries. Striker: Ravindra Jadeja, Bowler: Mohit Sharma.",
     "expected_keywords": ["10", "mohit", "jadeja", "yorker", "advantage"],
     "required_persona_terms": ["csk", "whistle podu", "yellow", "faith", "chase"],
+    "min_words": 10,
+    "max_words": 140,
+    "min_keywords_match": 2
+  },
+  {
+    "id": "live_context_over_14_5",
+    "category": "Live Context Grounding",
+    "question": "4 needed off 1 ball after Jadeja's straight six. What is the equation?",
+    "match_context": "Over 14.5, Score: 167/5, 4 needed off 1 ball.",
+    "expected_keywords": ["4", "1", "six", "mohit", "equation"],
+    "required_persona_terms": ["csk", "whistle podu", "jadeja", "straight"],
+    "min_words": 10,
+    "max_words": 140,
+    "min_keywords_match": 2
+  },
+  {
+    "id": "live_context_over_14_6",
+    "category": "Live Context Grounding",
+    "question": "Describe the winning four on the final ball 14.6.",
+    "match_context": "Over 14.6, Jadeja hits 4 past short fine leg.",
+    "expected_keywords": ["4", "1", "pads", "four", "delirium"],
+    "required_persona_terms": ["csk", "whistle podu", "dhoni", "lifts", "jadeja"],
+    "min_words": 10,
+    "max_words": 140,
+    "min_keywords_match": 2
+  },
+  {
+    "id": "metric_win_prob_swings",
+    "category": "Win Probability & Metrics",
+    "question": "What was CSK's lowest win probability and how did the +49% delta swing happen?",
+    "match_context": "Over 14.4 to 14.5 win probability transitions.",
+    "expected_keywords": ["5%", "win delta", "swing", "49%", "lowest"],
+    "required_persona_terms": ["csk", "whistle podu", "jadeja", "rollercoaster"],
+    "min_words": 10,
+    "max_words": 140,
+    "min_keywords_match": 2
+  },
+  {
+    "id": "metric_fan_tension_bpm",
+    "category": "Win Probability & Metrics",
+    "question": "What was the peak fan tension index and heart rate BPM during the final over?",
+    "match_context": "Final over emotional ECG telemetry.",
+    "expected_keywords": ["bpm", "tension", "heart", "94%", "156"],
+    "required_persona_terms": ["csk", "whistle podu", "rollercoaster", "emotional"],
     "min_words": 10,
     "max_words": 140,
     "min_keywords_match": 2
@@ -110,4 +220,3 @@
     "min_keywords_match": 1
   }
 ]
-

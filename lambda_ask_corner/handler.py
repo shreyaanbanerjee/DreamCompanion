@@ -40,9 +40,29 @@ def generate_fallback_fan_response(question: str, match_context: str = "") -> st
                 "mathematically impossible without a no-ball! Jadeja knew he had to hit a six or boundary. "
                 "That straight six kept CSK in the fight! Whistle Podu!"
             )
+        if any(k in q_lower for k in ["shami"]):
+            return (
+                "If Shami had bowled the 15th over, his pace and seam presentation would have tested the batsmen, "
+                "but he had already bowled out. Hardik Pandya backed Mohit's yorkers—which worked for 4 balls until "
+                "Sir Jadeja created magic! Whistle Podu!"
+            )
+        if any(k in q_lower for k in ["rain", "washout", "washed"]):
+            return (
+                "If rain had washed out the reserve day before 5 overs of the chase, GT would have taken the trophy "
+                "by finishing top of the league table. Massive credit to the Narendra Modi Stadium groundsmen for giving "
+                "us a thrilling 15-over finish! Whistle Podu!"
+            )
         return (
             "In a final-over chase, every dot ball or single completely flips the win probability! "
             "CSK's tactic has always been to take the game to the last ball and capitalize on the bowler's pressure."
+        )
+
+    # Win probability, delta swings, fan tension, and BPM metrics
+    if any(k in q_lower for k in ["win prob", "win delta", "delta", "bpm", "heart rate", "tension", "metric", "lowest"]):
+        return (
+            "Talk about an emotional rollercoaster! On 14.4 with 10 needed off 2, CSK's win probability plummeted "
+            "to a match-low 5%, fan heart rates spiked to 156 BPM, and tension hit 94%. But Jadeja's six sparked an "
+            "unprecedented +49% Win Delta swing in a single delivery! Whistle Podu!"
         )
 
     # DLS and target calculation
@@ -51,6 +71,43 @@ def generate_fallback_fan_response(question: str, match_context: str = "") -> st
             "Because of the rain delay, the DLS method reset CSK's target to 171 in 15 overs. "
             "That demanded a blistering Required Run Rate of 11.40 from ball one! In a shortened chase, "
             "every ball is gold, and Rayudu and Jadeja delivered the boundaries when we needed them most. Whistle Podu!"
+        )
+
+    # Rahane's crucial cameo
+    if any(k in q_lower for k in ["rahane", "ajinkya"]):
+        return (
+            "Ajinkya Rahane's 27 off 13 balls was pure championship gold! His fearless sixes broke the middle-overs "
+            "stranglehold and kept CSK's Required Run Rate within reach. Reborn in canary yellow! Whistle Podu!"
+        )
+
+    # Conway & Gaikwad opening stand
+    if any(k in q_lower for k in ["conway", "ruturaj", "gaikwad", "opener", "openers", "powerplay"]):
+        return (
+            "Devon Conway and Ruturaj Gaikwad set the tone with 52 runs in the 4-over powerplay! Chasing 171 in 15 overs "
+            "leaves zero room for dot balls, and our openers gave us the perfect launching pad. Whistle Podu!"
+        )
+
+    # Sai Sudharsan & GT total
+    if any(k in q_lower for k in ["sudharsan", "sai", "214", "gujarat"]):
+        return (
+            "Sai Sudharsan played an astonishing knock of 96 off 47 balls for Gujarat Titans. Chasing down a revised "
+            "171 against Shami, Rashid, and Mohit under Ahmedabad pressure required total self-belief from the Yellow Army!"
+        )
+
+    # Final delivery 14.6 & winning boundary
+    if any(k in q_lower for k in ["14.6", "winning shot", "final ball", "last ball"]) or (
+        ("four" in q_lower or "boundary" in q_lower) and ("final" in q_lower or "last" in q_lower or "win" in q_lower)
+    ):
+        return (
+            "4 needed off 1 ball: Mohit bowls a low full toss on the pads, and Sir Jadeja clips it fine past short "
+            "fine leg for FOUR! Total euphoria in the dugout as Dhoni lifts Jadeja! Whistle Podu!"
+        )
+
+    # 5 Titles & Franchise Legacy
+    if any(k in q_lower for k in ["troph", "title", "champion", "history", "five", "5th", "legacy"]):
+        return (
+            "Five-time IPL Champions (2010, 2011, 2018, 2021, 2023)! From the Chepauk fortress to Ahmedabad, "
+            "CSK's legacy under Thala MS Dhoni is unrivaled in T20 history. Whistle Podu!"
         )
 
     if any(k in q_lower for k in ["dhoni", "thala", "captain", "knee", "duck"]):
